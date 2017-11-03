@@ -18,6 +18,8 @@ class CreateTableCarriers extends Migration
             $table->uuid('uuid');
             $table->integer('employee_id')->unsigned();
             $table->string('driver_license');
+            $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('employee_id')->references('id')->on('employees');
         });

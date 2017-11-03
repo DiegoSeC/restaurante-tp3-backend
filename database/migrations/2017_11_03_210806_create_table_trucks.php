@@ -18,6 +18,8 @@ class CreateTableTrucks extends Migration
             $table->uuid('uuid');
             $table->string('license_plate');
             $table->string('brand');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

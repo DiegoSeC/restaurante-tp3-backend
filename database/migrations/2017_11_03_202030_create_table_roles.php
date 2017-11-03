@@ -17,6 +17,8 @@ class CreateTableRoles extends Migration
             $table->increments('id');
             $table->uuid('uuid');
             $table->string('name');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -24,6 +24,8 @@ class CreateTableEmployees extends Migration
             $table->string('address');
             $table->string('phone_number');
             $table->string('email');
+            $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('role_id')->references('id')->on('roles');
         });

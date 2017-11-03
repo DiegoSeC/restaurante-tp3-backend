@@ -20,6 +20,10 @@ class CreateTableWaybills extends Migration
             $table->integer('truck_id')->unsigned();
             $table->dateTime('date_time');
             $table->text('comment');
+            $table->enum('delivery_status', ['pending', 'progress', 'completed']);
+            $table->enum('status', ['active', 'canceled']);
+            $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('carrier_id')->references('id')->on('carriers');
             $table->foreign('truck_id')->references('id')->on('trucks');
