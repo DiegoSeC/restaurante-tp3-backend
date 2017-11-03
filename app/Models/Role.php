@@ -19,4 +19,7 @@ class Role extends Model
         'uuid', 'name'
     ];
 
+    public function employees() {
+        return $this->hasMany('App\Models\Employee');
+    }
 }

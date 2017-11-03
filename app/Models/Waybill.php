@@ -19,4 +19,11 @@ class Waybill extends Model
         'uuid', 'carrier_id', 'truck_id', 'date_time', 'comment'
     ];
 
+    public function carrier() {
+        return $this->belongsTo('App\Models\Carrier');
+    }
+
+    public function truck() {
+        return $this->belongsTo('App\Models\Truck');
+    }
 }

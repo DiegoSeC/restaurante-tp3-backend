@@ -19,4 +19,11 @@ class Carrier extends Model
         'uuid', 'employee_id', 'driver_license'
     ];
 
+    public function waybills() {
+        return $this->hasMany('App\Models\Waybill');
+    }
+
+    public function employee() {
+        return $this->belongsTo('App\Model\Employee');
+    }
 }

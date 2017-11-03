@@ -19,4 +19,7 @@ class Truck extends Model
         'uuid', 'license_plate', 'brand'
     ];
 
+    public function waybills() {
+        return $this->hasMany('App\Models\Waybill');
+    }
 }
