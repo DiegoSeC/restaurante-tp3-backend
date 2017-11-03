@@ -18,7 +18,7 @@ class Waybill extends Model
      * @var array
      */
     protected $fillable = [
-        'uuid', 'carrier_id', 'truck_id', 'date_time', 'comment'
+        'uuid', 'carrier_id', 'truck_id', 'date_time', 'comment', 'status', 'delivery_status'
     ];
 
     public function carrier() {

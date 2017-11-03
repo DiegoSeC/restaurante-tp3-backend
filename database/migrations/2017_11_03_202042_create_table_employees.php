@@ -24,6 +24,7 @@ class CreateTableEmployees extends Migration
             $table->string('address');
             $table->string('phone_number');
             $table->string('email');
+            $table->enum('status', ['active', 'inactive']);
             $table->timestamps();
             $table->softDeletes();
 

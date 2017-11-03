@@ -18,7 +18,7 @@ class Employee extends Model
      * @var array
      */
     protected $fillable = [
-        'uuid', 'user_uuid', 'role_id', 'document_number', 'name', 'last_name', 'address', 'phone_number', 'email'
+        'uuid', 'user_uuid', 'role_id', 'document_number', 'name', 'last_name', 'address', 'phone_number', 'email', 'status'
     ];
 
     public function carrier() {

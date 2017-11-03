@@ -18,7 +18,7 @@ class Truck extends Model
      * @var array
      */
     protected $fillable = [
-        'uuid', 'license_plate', 'brand'
+        'uuid', 'license_plate', 'brand', 'status'
     ];
 
     public function waybills() {
