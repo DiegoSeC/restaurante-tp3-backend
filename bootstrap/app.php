@@ -23,9 +23,18 @@ $app = new Laravel\Lumen\Application(
     realpath(__DIR__.'/../')
 );
 
-// $app->withFacades();
+$app->withFacades();
 
-// $app->withEloquent();
+$app->withEloquent();
+
+
+/*
+|--------------------------------------------------------------------------
+| Configuration
+|--------------------------------------------------------------------------
+*/
+
+$app->configure('exception');
 
 /*
 |--------------------------------------------------------------------------
@@ -81,6 +90,10 @@ $app->singleton(
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
+
+if (class_exists(Spatie\Fractal\FractalServiceProvider::class)) {
+    $app->register(Spatie\Fractal\FractalServiceProvider::class);
+}
 
 /*
 |--------------------------------------------------------------------------
