@@ -41,11 +41,16 @@ class WaybillController extends Controller
     public function get($uuid) {
         $item = $this->waybillService->getByUuid($uuid);
 
-        $response = fractal()->item($item, new WaybillTransformer(), 'data')
-            ->serializeWith(new CustomSerializer())
-            ->toArray();
+        if(!is_null($item)) {
+            $response = fractal()->item($item, new WaybillTransformer(), 'data')
+                ->serializeWith(new CustomSerializer())
+                ->toArray();
 
-        return $this->responseOK($response);
+            return $this->responseOK($response);
+        } else {
+            abort(404);
+        }
+
     }
 
     /**
@@ -59,7 +64,7 @@ class WaybillController extends Controller
             ->serializeWith(new CustomSerializer())
             ->toArray();
 
-        return $this->responseOK($response);
+        return $this->responseOK($response, 201);
     }
 
     /**
