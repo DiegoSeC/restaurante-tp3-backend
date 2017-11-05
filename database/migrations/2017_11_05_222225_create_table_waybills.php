@@ -22,7 +22,7 @@ class CreateTableWaybills extends Migration
             $table->integer('warehouse_from_id')->unsigned();
             $table->integer('warehouse_to_id')->unsigned();
             $table->dateTime('date_time');
-            $table->text('comment');
+            $table->text('comment')->nullable();
             $table->enum('delivery_status', ['pending', 'progress', 'completed', 'canceled']);
             $table->enum('status', ['active', 'canceled']);
             $table->timestamps();

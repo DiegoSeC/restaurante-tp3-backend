@@ -68,4 +68,17 @@ class WaybillService implements CrudServiceInterface
         return [];
     }
 
+    /**
+     * @param $uuid
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getByCarrierUuid($uuid) {
+        return $this->waybillModel
+            ->select('waybills.*')
+            ->join('carriers', 'waybills.carrier_id', '=','carriers.id')
+            ->where('carriers.uuid', '=', $uuid)
+            ->get();
+    }
+
+
 }

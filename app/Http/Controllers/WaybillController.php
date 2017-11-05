@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\Classes\NotFoundException;
 use App\Http\Controllers\Traits\ResponseTrait;
 use App\Http\Controllers\Traits\ValidationRequestTrait;
 use App\Http\ValidationRules\Waybill\CreateWaybillValidationRules;
@@ -50,6 +51,7 @@ class WaybillController extends Controller
     /**
      * @param $uuid
      * @return \Illuminate\Http\JsonResponse
+     * @throws NotFoundException
      */
     public function get($uuid) {
         $item = $this->waybillService->getByUuid($uuid);
@@ -61,7 +63,7 @@ class WaybillController extends Controller
 
             return $this->responseOK($response);
         } else {
-            abort(404);
+            throw new NotFoundException();
         }
 
     }
@@ -119,7 +121,8 @@ class WaybillController extends Controller
 
         $input = $request->only([
            'delivery_status',
-            'comment'
+            'comment',
+            'status'
         ]);
 
         $item = $this->waybillService->update($uuid, $input);
@@ -140,5 +143,20 @@ class WaybillController extends Controller
 
         return $this->responseNoContent();
     }
+
+    /**
+     * @param $uuid
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getByCarrierUuid($uuid) {
+        $data = $this->waybillService->getByCarrierUuid($uuid);
+
+        $response = fractal()->collection($data, new WaybillTransformer(), 'data')
+            ->serializeWith(new CustomSerializer())
+            ->toArray();
+
+        return $this->responseOK($response);
+    }
+
 
 }

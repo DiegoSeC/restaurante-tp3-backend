@@ -23,5 +23,6 @@ $app->group(['prefix' => 'api'], function () use($app) {
     $app->put('waybills/{uuid}', 'WaybillController@put');
     $app->patch('waybills/{uuid}', 'WaybillController@patch');
     $app->delete('waybills/{uuid}', 'WaybillController@delete');
+    $app->get('carriers/{uuid}/waybills', 'WaybillController@getByCarrierUuid');
 
 });
