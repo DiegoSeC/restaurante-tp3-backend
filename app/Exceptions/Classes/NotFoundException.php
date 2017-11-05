@@ -8,9 +8,10 @@ use Throwable;
 class NotFoundException extends AbstractException
 {
 
-    public function __construct(Throwable $previous = null)
+    public function __construct($message = null, Throwable $previous = null)
     {
-        parent::__construct(trans('exception.not_found'), 404, $previous);
+        $message = (!is_null($message))? $message : trans('exception.bad_request');
+        parent::__construct($message, 404, $previous);
     }
 
 }
