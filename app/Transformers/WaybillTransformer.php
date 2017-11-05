@@ -24,21 +24,25 @@ class WaybillTransformer extends TransformerAbstract
             'date' => $carbon->toDateString(),
             'time' => $carbon->toTimeString(),
             'carrier' => [
+                'uuid' => $carrier->uuid,
                 'driver_license' => $carrier->driver_license,
                 'name' => $employee->name,
                 'last_name' => $employee->last_name
             ],
             'truck' => [
+                'uuid' => $truck->uuid,
                 'license_plate' => $truck->license_plate,
                 'brand' => $truck->brand
             ],
-            'from' => [
+            'warehouse_from' => [
+                'uuid' => $warehouseFrom->uuid,
                 'code' => $warehouseFrom->code,
                 'contact' => $warehouseFrom->contact_name,
                 'email' => $warehouseFrom->contact_email,
                 'phone_number' => $warehouseFrom->contact_phone_number,
             ],
-            'to' => [
+            'warehouse_to' => [
+                'uuid' => $warehouseTo->uuid,
                 'code' => $warehouseTo->code,
                 'contact' => $warehouseTo->contact_name,
                 'email' => $warehouseTo->contact_email,
