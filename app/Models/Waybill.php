@@ -18,7 +18,7 @@ class Waybill extends Model
      * @var array
      */
     protected $fillable = [
-        'uuid', 'carrier_id', 'truck_id', 'date_time', 'comment', 'status', 'delivery_status'
+        'uuid', 'carrier_id', 'truck_id', 'warehouse_from_id', 'warehouse_to_id', 'date_time', 'comment', 'status', 'delivery_status'
     ];
 
     public function carrier() {
@@ -27,5 +27,13 @@ class Waybill extends Model
 
     public function truck() {
         return $this->belongsTo('App\Models\Truck');
+    }
+
+    public function warehouse_from() {
+        return $this->belongsTo('App\Models\Warehouse');
+    }
+
+    public function warehouse_to() {
+        return $this->belongsTo('App\Models\Warehouse');
     }
 }

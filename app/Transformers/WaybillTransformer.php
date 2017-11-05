@@ -16,6 +16,8 @@ class WaybillTransformer extends TransformerAbstract
         $carrier = $waybill->carrier;
         $employee = $carrier->employee;
         $truck = $waybill->truck;
+        $warehouseFrom = $waybill->warehouse_from;
+        $warehouseTo = $waybill->warehouse_to;
 
         $response = [
             'uuid' => $waybill->uuid,
@@ -29,6 +31,18 @@ class WaybillTransformer extends TransformerAbstract
             'truck' => [
                 'license_plate' => $truck->license_plate,
                 'brand' => $truck->brand
+            ],
+            'from' => [
+                'code' => $warehouseFrom->code,
+                'contact' => $warehouseFrom->contact_name,
+                'email' => $warehouseFrom->contact_email,
+                'phone_number' => $warehouseFrom->contact_phone_number,
+            ],
+            'to' => [
+                'code' => $warehouseTo->code,
+                'contact' => $warehouseTo->contact_name,
+                'email' => $warehouseTo->contact_email,
+                'phone_number' => $warehouseTo->contact_phone_number,
             ],
             'comment' => $waybill->comment,
             'delivery_status' => (string) $waybill->delivery_status,

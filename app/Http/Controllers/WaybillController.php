@@ -118,7 +118,8 @@ class WaybillController extends Controller
         $this->validateExistParams($request, UpdatePartiallyWaybillValidationRules::rules());
 
         $input = $request->only([
-           'delivery_status'
+           'delivery_status',
+            'comment'
         ]);
 
         $item = $this->waybillService->update($uuid, $input);
