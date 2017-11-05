@@ -2,12 +2,12 @@
 
 namespace App\Http\ValidationRules\Waybill;
 
-class UpdateWaybillValidationRules
+class UpdatePartiallyWaybillValidationRules
 {
 
     public static function rules() {
         return [
-
+            'delivery_status' => 'in:pending,progress,completed'
         ];
     }
 

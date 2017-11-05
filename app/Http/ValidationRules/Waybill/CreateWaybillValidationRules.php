@@ -2,7 +2,7 @@
 
 namespace App\Http\ValidationRules\Waybill;
 
-class UpdateWaybillValidationRules
+class CreateWaybillValidationRules
 {
 
     public static function rules() {

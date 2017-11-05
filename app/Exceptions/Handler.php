@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Exceptions\Classes\AbstractException;
 use Exception;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -45,6 +46,27 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+
+        if ($e instanceof AbstractException) {
+            return $this->formatJson($e->getMessage(), $e->getCode());
+        } elseif ($e instanceof ValidationException) {
+            return $this->formatJson(trans('exception.validation_exception'), 400, $e->validator->errors());
+        }
+
         return parent::render($request, $e);
+    }
+
+    /**
+     * @param $message
+     * @param $code
+     * @param null $data
+     * @return \Illuminate\Http\JsonResponse
+     */
+    private function formatJson($message, $code, $data = null) {
+        if(is_null($data)) {
+            return response()->json(['error' => ['message' => $message]], $code);
+        } else {
+            return response()->json(['error' => ['message' => $message, 'data' => $data]], $code);
+        }
     }
 }

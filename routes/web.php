@@ -21,7 +21,7 @@ $app->group(['prefix' => 'api'], function () use($app) {
     $app->post('waybills', 'WaybillController@post');
     $app->get('waybills/{uuid}', 'WaybillController@get');
     $app->put('waybills/{uuid}', 'WaybillController@put');
-    $app->path('waybills/{uuid}', 'WaybillController@patch');
+    $app->patch('waybills/{uuid}', 'WaybillController@patch');
     $app->delete('waybills/{uuid}', 'WaybillController@delete');
 
 });

@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Traits;
 
 use App\Exceptions\Classes\BadRequestException;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Validator;
 
 
-Trait ValidateRequestTrait
+Trait ValidationRequestTrait
 {
 
      private $contentTypeJson = 'json';
@@ -19,7 +20,7 @@ Trait ValidateRequestTrait
     public function validateRequestJson(Request $request)
     {
         if (!$request->isJson() || ($request->getContentType() != $this->contentTypeJson)) {
-            throw new BadRequestException(trans('exception.bad_request'));
+            throw new BadRequestException(trans('exception.bad_request_json'));
         }
     }
 
@@ -40,6 +41,7 @@ Trait ValidateRequestTrait
      * @param Request $request
      * @param array $rules
      * @throws BadRequestException
+     * @throws ValidationException
      */
     public function validateExistParams(Request $request, array $rules)
     {
@@ -58,7 +60,7 @@ Trait ValidateRequestTrait
 
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-            throw new BadRequestException(trans('exception.bad_request'));
+            throw new ValidationException($validator);
         }
 
     }

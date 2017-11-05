@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Traits\ResponseTrait;
+use App\Http\Controllers\Traits\ValidationRequestTrait;
+use App\Http\ValidationRules\Waybill\CreateWaybillValidationRules;
+use App\Http\ValidationRules\Waybill\SearchWaybillValidationRules;
+use App\Http\ValidationRules\Waybill\UpdatePartiallyWaybillValidationRules;
+use App\Http\ValidationRules\Waybill\UpdateWaybillValidationRules;
 use App\Serializers\CustomSerializer;
 use App\Services\WaybillService;
 use App\Transformers\WaybillTransformer;
@@ -12,6 +17,7 @@ class WaybillController extends Controller
 {
 
     use ResponseTrait;
+    use ValidationRequestTrait;
 
     private $waybillService;
 
@@ -25,9 +31,13 @@ class WaybillController extends Controller
     }
 
     /**
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index() {
+    public function index(Request $request) {
+
+        $this->validateParams($request, SearchWaybillValidationRules::rules());
+
         $data = $this->waybillService->getAll();
 
         $response = fractal()->collection($data, new WaybillTransformer(), 'data')
@@ -37,7 +47,10 @@ class WaybillController extends Controller
         return $this->responseOK($response);
     }
 
-
+    /**
+     * @param $uuid
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function get($uuid) {
         $item = $this->waybillService->getByUuid($uuid);
 
@@ -58,7 +71,13 @@ class WaybillController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function post(Request $request) {
-        $item = $this->waybillService->create($request->all());
+
+        $this->validateRequestJson($request);
+        $this->validateParams($request, CreateWaybillValidationRules::rules());
+
+        $input = $request->all();
+
+        $item = $this->waybillService->create($input);
 
         $response = fractal()->item($item, new WaybillTransformer(), 'data')
             ->serializeWith(new CustomSerializer())
@@ -73,7 +92,13 @@ class WaybillController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function put(Request $request, $uuid) {
-        $item = $this->waybillService->update($uuid, $request->all());
+
+        $this->validateRequestJson($request);
+        $this->validateParams($request, UpdateWaybillValidationRules::rules());
+
+        $input = $request->all();
+
+        $item = $this->waybillService->update($uuid, $input);
 
         $response = fractal()->item($item, new WaybillTransformer(), 'data')
             ->serializeWith(new CustomSerializer())
@@ -88,7 +113,15 @@ class WaybillController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function patch(Request $request, $uuid) {
-        $item = $this->waybillService->update($uuid, $request->all());
+
+        $this->validateRequestJson($request);
+        $this->validateExistParams($request, UpdatePartiallyWaybillValidationRules::rules());
+
+        $input = $request->only([
+           'delivery_status'
+        ]);
+
+        $item = $this->waybillService->update($uuid, $input);
 
         $response = fractal()->item($item, new WaybillTransformer(), 'data')
             ->serializeWith(new CustomSerializer())
@@ -102,7 +135,7 @@ class WaybillController extends Controller
      * @return mixed
      */
     public function delete($uuid) {
-        $item = $this->waybillService->delete($uuid);
+        $this->waybillService->delete($uuid);
 
         return $this->responseNoContent();
     }
