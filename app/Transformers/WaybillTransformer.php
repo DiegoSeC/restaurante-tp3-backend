@@ -21,6 +21,7 @@ class WaybillTransformer extends TransformerAbstract
 
         $response = [
             'uuid' => $waybill->uuid,
+            'document_number' => $waybill->document_number,
             'date' => $carbon->toDateString(),
             'time' => $carbon->toTimeString(),
             'carrier' => [
