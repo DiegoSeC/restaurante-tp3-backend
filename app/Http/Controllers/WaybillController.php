@@ -98,7 +98,11 @@ class WaybillController extends Controller
         $this->validateRequestJson($request);
         $this->validateParams($request, UpdateWaybillValidationRules::rules());
 
-        $input = $request->all();
+        $input = $request->only([
+            'delivery_status',
+            'comment',
+            'status'
+        ]);
 
         $item = $this->waybillService->update($uuid, $input);
 
