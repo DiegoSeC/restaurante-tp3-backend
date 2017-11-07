@@ -27,7 +27,7 @@ trait ResponseTrait
      */
     protected function responseNoContent()
     {
-        return response()->json('', Response::HTTP_NO_CONTENT);
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 
 }
