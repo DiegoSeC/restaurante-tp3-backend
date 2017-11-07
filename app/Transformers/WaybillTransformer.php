@@ -41,6 +41,8 @@ class WaybillTransformer extends TransformerAbstract
                 'contact' => $warehouseFrom->contact_name,
                 'email' => $warehouseFrom->contact_email,
                 'phone_number' => $warehouseFrom->contact_phone_number,
+                'longitude' => $warehouseFrom->longitude,
+                'latitude' => $warehouseFrom->latitude
             ],
             'warehouse_to' => [
                 'uuid' => $warehouseTo->uuid,
@@ -48,6 +50,8 @@ class WaybillTransformer extends TransformerAbstract
                 'contact' => $warehouseTo->contact_name,
                 'email' => $warehouseTo->contact_email,
                 'phone_number' => $warehouseTo->contact_phone_number,
+                'longitude' => $warehouseTo->longitude,
+                'latitude' => $warehouseTo->latitude
             ],
             'comment' => $waybill->comment,
             'delivery_status' => (string) $waybill->delivery_status,

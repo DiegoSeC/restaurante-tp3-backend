@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\Classes\NotFoundException;
 use App\Http\Controllers\Traits\ResponseTrait;
 use App\Http\Controllers\Traits\ValidationRequestTrait;
+use App\Http\ValidationRules\Waybill\BatchUpdateWaybillValidationRules;
 use App\Http\ValidationRules\Waybill\CreateWaybillValidationRules;
 use App\Http\ValidationRules\Waybill\SearchWaybillValidationRules;
 use App\Http\ValidationRules\Waybill\UpdatePartiallyWaybillValidationRules;
@@ -160,6 +161,25 @@ class WaybillController extends Controller
             ->toArray();
 
         return $this->responseOK($response);
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function batchUpdate(Request $request) {
+        $this->validateRequestJson($request);
+        $this->validateParams($request, BatchUpdateWaybillValidationRules::rules());
+
+        $input = $request->only([
+            'delivery_status',
+            'comment',
+            'status'
+        ]);
+
+        $this->waybillService->batchUpdate($request->get('waybills', []), $input);
+
+        return $this->responseNoContent();
     }
 
 

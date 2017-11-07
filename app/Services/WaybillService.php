@@ -4,9 +4,12 @@ namespace App\Services;
 
 use App\Exceptions\Classes\NotFoundException;
 use App\Models\Waybill;
+use App\Services\Traits\ClearNullInputsTrait;
 
 class WaybillService implements CrudServiceInterface
 {
+
+    use ClearNullInputsTrait;
 
     private $waybillModel = null;
 
@@ -54,6 +57,7 @@ class WaybillService implements CrudServiceInterface
             throw new NotFoundException();
         }
 
+        $data = $this->clearNullParams($data);
         $waybill->fill($data);
         $waybill->save();
 
@@ -80,5 +84,19 @@ class WaybillService implements CrudServiceInterface
             ->get();
     }
 
+    /**
+     * @param $waybills
+     * @param $data
+     */
+    public function batchUpdate($waybills, $data) {
+        $data = $this->clearNullParams($data);
+        foreach ($waybills as $waybillUuid) {
+            $waybill = $this->waybillModel->where('uuid', '=', $waybillUuid)->first();
+            if(!is_null($waybill)) {
+                $waybill->fill($data);
+                $waybill->save();
+            }
+        }
+    }
 
 }

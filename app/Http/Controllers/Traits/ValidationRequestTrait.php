@@ -27,13 +27,13 @@ Trait ValidationRequestTrait
     /**
      * @param Request $request
      * @param array $rules
-     * @throws BadRequestException
+     * @throws ValidationException
      */
     public function validateParams(Request $request, array $rules)
     {
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-            throw new BadRequestException(trans('exception.bad_request'));
+            throw new ValidationException($validator);
         }
     }
 

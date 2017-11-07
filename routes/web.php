@@ -19,6 +19,7 @@ $app->group(['prefix' => 'api'], function () use($app) {
 
     $app->get('waybills', 'WaybillController@index');
     $app->post('waybills', 'WaybillController@post');
+    $app->put('waybills/batch-update', 'WaybillController@batchUpdate');
     $app->get('waybills/{uuid}', 'WaybillController@get');
     $app->put('waybills/{uuid}', 'WaybillController@put');
     $app->patch('waybills/{uuid}', 'WaybillController@patch');
