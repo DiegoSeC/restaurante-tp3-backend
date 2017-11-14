@@ -67,14 +67,34 @@ $factory->define(App\Models\Waybill::class, function (Faker\Generator $faker) {
             return App\Models\Truck::inRandomOrder()->first()->id ?: factory(App\Models\Truck::class)->create()->id;
         },
         'warehouse_from_id' => function($waybill) {
-            return App\Models\Warehouse::inRandomOrder()->first()->id ?: factory(App\Models\Truck::class)->create()->id;
+            return App\Models\Warehouse::inRandomOrder()->first()->id ?: factory(App\Models\Warehouse::class)->create()->id;
         },
         'warehouse_to_id' => function($waybill) {
-            return App\Models\Warehouse::inRandomOrder()->first()->id ?: factory(App\Models\Truck::class)->create()->id;
+            return App\Models\Warehouse::inRandomOrder()->first()->id ?: factory(App\Models\Warehouse::class)->create()->id;
         },
         'date_time' => $faker->dateTime,
         'comment' => null,
         'delivery_status' => 'pending',
         'status' => 'active'
+    ];
+});
+
+$factory->define(App\Models\ProductCategory::class, function (Faker\Generator $faker) {
+    return [
+        'uuid' => $faker->uuid,
+        'name' => $faker->word
+    ];
+});
+
+$factory->define(App\Models\Product::class, function (Faker\Generator $faker) {
+    return [
+        'uuid' => $faker->uuid,
+        'product_category_id' => function($waybill) {
+            return App\Models\ProductCategory::inRandomOrder()->first()->id ?: factory(App\Models\ProductCategory::class)->create()->id;
+        },
+        'sku' => $faker->randomNumber(8),
+        'name' => $faker->word,
+        'description' => $faker->words(20, true),
+        'unit_of_measurement' => $faker->randomLetter . $faker->randomLetter
     ];
 });

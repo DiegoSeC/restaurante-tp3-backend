@@ -28,4 +28,16 @@ class Warehouse extends Model
     public function waybills_to() {
         return $this->hasMany('App\Models\Waybill', 'warehouse_to_id');
     }
+
+    public function products() {
+        return $this->belongsToMany('App\Models\Product', 'warehouse_has_products');
+    }
+
+    public function inventory_movements() {
+        return $this->hasMany('App\Models\InventoryMovement');
+    }
+
+    public function orders() {
+        return $this->hasMany('App\Models\Order');
+    }
 }

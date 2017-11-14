@@ -43,6 +43,6 @@ class CreateTableWaybills extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('waybill');
+        Schema::dropIfExists('waybills');
     }
 }
