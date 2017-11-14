@@ -5,24 +5,24 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Traits\ResponseTrait;
 use App\Http\Controllers\Traits\ValidationRequestTrait;
 use App\Serializers\CustomSerializer;
-use App\Services\ProductService;
+use App\Services\OrderService;
 use App\Transformers\ProductTransformer;
 
-class ProductController extends Controller
+class OrderController extends Controller
 {
 
     use ResponseTrait;
     use ValidationRequestTrait;
 
-    private $productService;
+    private $orderService;
 
     /**
-     * ProductController constructor.
-     * @param ProductService $productService
+     * OrderController constructor.
+     * @param OrderService $orderService
      */
-    public function __construct(ProductService $productService)
+    public function __construct(OrderService $orderService)
     {
-        $this->productService = $productService;
+        $this->$orderService = $orderService;
     }
 
     /**
@@ -30,7 +30,7 @@ class ProductController extends Controller
      */
     public function index() {
 
-        $data = $this->productService->getAll();
+        $data = $this->orderService->getAll();
 
         $response = fractal()->collection($data, new ProductTransformer(), 'data')
             ->serializeWith(new CustomSerializer())
@@ -38,8 +38,6 @@ class ProductController extends Controller
 
         return $this->responseOK($response);
     }
-
-
 
 
 }

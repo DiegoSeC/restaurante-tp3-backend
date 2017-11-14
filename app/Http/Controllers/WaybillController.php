@@ -33,12 +33,9 @@ class WaybillController extends Controller
     }
 
     /**
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(Request $request) {
-
-        $this->validateParams($request, SearchWaybillValidationRules::rules());
+    public function index() {
 
         $data = $this->waybillService->getAll();
 

@@ -2,18 +2,21 @@
 
 namespace App\Services;
 
+use App\Models\Order;
 use App\Models\Product;
 
-class ProductService
+class OrderService
 {
 
+    private $orderModel = null;
     private $productModel = null;
 
     /**
-     * ProductService constructor.
+     * OrderService constructor.
      */
     public function __construct()
     {
+        $this->orderModel = new Order();
         $this->productModel = new Product();
     }
 
@@ -21,6 +24,6 @@ class ProductService
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public function getAll() {
-        return $this->productModel->orderBy('created_at', 'desc')->get();
+        return $this->orderModel->orderBy('created_at', 'desc')->get();
     }
 }

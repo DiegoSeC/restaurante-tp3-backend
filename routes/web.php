@@ -29,4 +29,8 @@ $app->group(['prefix' => 'api'], function () use($app) {
 
     //products
     $app->get('products', 'ProductController@index');
+
+    //warehouses
+    $app->get('warehouses', 'WarehouseController@index');
+
 });
