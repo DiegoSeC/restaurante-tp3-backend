@@ -2,14 +2,21 @@
 
 namespace App\Services;
 
+use App\Exceptions\Classes\NotFoundException;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Warehouse;
+use App\Services\Traits\ClearNullInputsTrait;
+use Illuminate\Support\Facades\DB;
 
-class OrderService
+class OrderService extends AbstractService implements CrudServiceInterface
 {
+
+    use ClearNullInputsTrait;
 
     private $orderModel = null;
     private $productModel = null;
+    private $warehouseModel = null;
 
     /**
      * OrderService constructor.
@@ -18,6 +25,7 @@ class OrderService
     {
         $this->orderModel = new Order();
         $this->productModel = new Product();
+        $this->warehouseModel = new Warehouse();
     }
 
     /**
@@ -33,6 +41,79 @@ class OrderService
      */
     public function getByUuid($uuid) {
         return $this->orderModel->where('uuid', '=', $uuid)->first();
+    }
+
+    /**
+     * @param $data
+     * @return Order|null
+     */
+    public function create($data) {
+        try {
+
+            DB::beginTransaction();
+
+            $products = $data['products'];
+            unset($data['products']);
+
+            $data['status'] = Order::ORDER_STATUS_PENDING;
+            $warehouse = $this->warehouseModel->where('uuid', $data['warehouse'])->first();
+            if(!is_null($warehouse)) {
+                $data['warehouse_id'] = $warehouse->id;
+            } else {
+                throw new NotFoundException();
+            }
+
+            $this->orderModel->fill($data);
+            $this->orderModel->save();
+
+            $this->orderModel->update([
+                'uuid' => $this->orderModel->generateUuid(),
+                'document_number' => str_pad($this->orderModel->id, 10, '0', STR_PAD_LEFT)
+            ]);
+
+            foreach ($products as $product) {
+                $productDB = $this->productModel->where('uuid', $product['uuid'])->first();
+                if(!is_null($productDB)) {
+                    $this->orderModel->products()->attach($productDB->id, ['quantity' => $product['quantity']]);
+                } else {
+                    throw new NotFoundException();
+                }
+            }
+
+            DB::commit();
+
+            return $this->orderModel;
+        } catch (\Exception $exception) {
+            DB::rollBack();
+        }
+    }
+
+    /**
+     * @param $uuid
+     * @param $data
+     * @return \Illuminate\Database\Eloquent\Model|null|static
+     * @throws NotFoundException
+     */
+    public function update($uuid, $data) {
+        $waybill = $this->orderModel->where('uuid', '=', $uuid)->first();
+
+        if(is_null($waybill)) {
+            throw new NotFoundException();
+        }
+
+        $data = $this->clearNullParams($data);
+        $waybill->fill($data);
+        $waybill->save();
+
+        return $waybill;
+    }
+
+    /**
+     * @param $uuid
+     * @return array
+     */
+    public function delete($uuid) {
+        return [];
     }
 
 }

@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\Warehouse;
 
-class WarehouseService
+class WarehouseService extends AbstractService
 {
 
     private $warehouseModel = null;

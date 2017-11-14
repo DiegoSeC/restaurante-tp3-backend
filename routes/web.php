@@ -36,5 +36,6 @@ $app->group(['prefix' => 'api'], function () use($app) {
     //orders
     $app->get('orders', 'OrderController@index');
     $app->get('orders/{uuid}', 'OrderController@get');
+    $app->post('orders', 'OrderController@post');
 
 });

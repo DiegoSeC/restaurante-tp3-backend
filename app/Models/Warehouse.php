@@ -30,7 +30,7 @@ class Warehouse extends Model
     }
 
     public function products() {
-        return $this->belongsToMany('App\Models\Product', 'warehouse_has_products');
+        return $this->belongsToMany('App\Models\Product', 'warehouse_has_products')->withPivot(['stock', 'minimum_stock', 'maximum_stock'])->withTimestamps();
     }
 
     public function inventory_movements() {

@@ -6,7 +6,7 @@ use App\Exceptions\Classes\NotFoundException;
 use App\Models\Waybill;
 use App\Services\Traits\ClearNullInputsTrait;
 
-class WaybillService implements CrudServiceInterface
+class WaybillService extends AbstractService implements CrudServiceInterface
 {
 
     use ClearNullInputsTrait;

@@ -26,7 +26,7 @@ class InventoryMovement extends Model
     }
 
     public function products() {
-        return $this->belongsToMany('App\Models\Product', 'inventory_movement_has_products');
+        return $this->belongsToMany('App\Models\Product', 'inventory_movement_has_products')->withPivot('quantity')->withTimestamps();
     }
 
 }

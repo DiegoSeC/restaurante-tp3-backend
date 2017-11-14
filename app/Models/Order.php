@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Order extends Model
 {
 
+    const ORDER_STATUS_PENDING = 'pending';
+    const ORDER_STATUS_COMPLETED = 'completed';
+    const ORDER_STATUS_CANCELED = 'canceled';
+
     use ModelUuidTrait;
     use SoftDeletes;
 
@@ -18,11 +22,11 @@ class Order extends Model
      * @var array
      */
     protected $fillable = [
-        'uuid', 'warehouse_id', 'document_number'
+        'uuid', 'warehouse_id', 'document_number', 'status'
     ];
 
     public function products() {
-        return $this->belongsToMany('App\Models\Product', 'order_has_products')->withPivot('quantity');
+        return $this->belongsToMany('App\Models\Product', 'order_has_products')->withPivot('quantity')->withTimestamps();
     }
 
     public function warehouse() {
