@@ -23,7 +23,8 @@ class OrderTransformer extends TransformerAbstract
                 'uuid' => $warehouse->uuid,
                 'code' => $warehouse->code,
                 'name' => $warehouse->name
-            ]
+            ],
+            'status' => $order->status
         ];
 
         return $response;
