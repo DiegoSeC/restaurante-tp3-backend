@@ -17,6 +17,7 @@ $app->get('/', function () use ($app) {
 
 $app->group(['prefix' => 'api'], function () use($app) {
 
+    //waybills
     $app->get('waybills', 'WaybillController@index');
     $app->post('waybills', 'WaybillController@post');
     $app->put('waybills/batch-update', 'WaybillController@batchUpdate');
@@ -26,4 +27,6 @@ $app->group(['prefix' => 'api'], function () use($app) {
     $app->delete('waybills/{uuid}', 'WaybillController@delete');
     $app->get('carriers/{uuid}/waybills', 'WaybillController@getByCarrierUuid');
 
+    //products
+    $app->get('products', 'ProductController@index');
 });
