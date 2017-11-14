@@ -15,6 +15,8 @@ class WarehouseTransformer extends TransformerAbstract
         $response = [
             'uuid' => $warehouse->uuid,
             'code' => $warehouse->code,
+            'name' => $warehouse->name,
+            'address' => $warehouse->address,
             'contact_name' => $warehouse->contact_name,
             'contact_email' => $warehouse->contact_email,
             'contact_phone_number' => $warehouse->contact_phone_number,

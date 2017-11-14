@@ -4,6 +4,7 @@ $factory->define(App\Models\Warehouse::class, function (Faker\Generator $faker) 
     return [
         'uuid' => $faker->uuid,
         'code' => $faker->randomNumber(5),
+        'address' => $faker->address,
         'contact_name' => $faker->name(),
         'contact_email' => $faker->email,
         'contact_phone_number' => $faker->phoneNumber,
