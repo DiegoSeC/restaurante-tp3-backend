@@ -26,4 +26,13 @@ class OrderService
     public function getAll() {
         return $this->orderModel->orderBy('created_at', 'desc')->get();
     }
+
+    /**
+     * @param $uuid
+     * @return \Illuminate\Database\Eloquent\Model|null|static
+     */
+    public function getByUuid($uuid) {
+        return $this->orderModel->where('uuid', '=', $uuid)->first();
+    }
+
 }

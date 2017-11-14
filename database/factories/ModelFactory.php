@@ -90,12 +90,34 @@ $factory->define(App\Models\ProductCategory::class, function (Faker\Generator $f
 $factory->define(App\Models\Product::class, function (Faker\Generator $faker) {
     return [
         'uuid' => $faker->uuid,
-        'product_category_id' => function($waybill) {
+        'product_category_id' => function($product) {
             return App\Models\ProductCategory::inRandomOrder()->first()->id ?: factory(App\Models\ProductCategory::class)->create()->id;
         },
         'sku' => $faker->randomNumber(8),
         'name' => $faker->word,
         'description' => $faker->words(20, true),
         'unit_of_measurement' => $faker->randomLetter . $faker->randomLetter
+    ];
+});
+
+$factory->define(App\Models\Order::class, function (Faker\Generator $faker) {
+    return [
+        'uuid' => $faker->uuid,
+        'warehouse_id' => function($order) {
+            return App\Models\Warehouse::inRandomOrder()->first()->id ?: factory(App\Models\Warehouse::class)->create()->id;
+        },
+        'document_number' => $faker->randomNumber(8)
+    ];
+});
+
+$factory->define(App\Models\OrderHasProduct::class, function (Faker\Generator $faker) {
+    return [
+        'product_id' => function($orderHasProduct) {
+            return App\Models\Product::inRandomOrder()->first()->id ?: factory(App\Models\Product::class)->create()->id;
+        },
+        'order_id' => function($orderHasProduct) {
+            return App\Models\Order::inRandomOrder()->first()->id ?: factory(App\Models\Order::class)->create()->id;
+        },
+        'quantity' => $faker->randomNumber(2)
     ];
 });

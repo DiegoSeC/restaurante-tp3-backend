@@ -22,7 +22,7 @@ class Order extends Model
     ];
 
     public function products() {
-        return $this->belongsToMany('App\Models\Product', 'order_has_products');
+        return $this->belongsToMany('App\Models\Product', 'order_has_products')->withPivot('quantity');
     }
 
     public function warehouse() {

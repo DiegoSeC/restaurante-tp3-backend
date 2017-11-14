@@ -33,4 +33,8 @@ $app->group(['prefix' => 'api'], function () use($app) {
     //warehouses
     $app->get('warehouses', 'WarehouseController@index');
 
+    //orders
+    $app->get('orders', 'OrderController@index');
+    $app->get('orders/{uuid}', 'OrderController@get');
+
 });

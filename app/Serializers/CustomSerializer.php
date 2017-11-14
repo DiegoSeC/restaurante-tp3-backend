@@ -17,7 +17,7 @@ class CustomSerializer extends DataArraySerializer
      */
     public function collection($resourceKey, array $data)
     {
-        return $resourceKey === false ? $data : [$resourceKey => $data];;
+        return $resourceKey === false ? $data : [$resourceKey => $data];
     }
 
     /**
