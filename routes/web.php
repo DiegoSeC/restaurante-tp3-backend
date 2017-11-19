@@ -37,5 +37,8 @@ $app->group(['prefix' => 'api'], function () use($app) {
     $app->get('orders', 'OrderController@index');
     $app->get('orders/{uuid}', 'OrderController@get');
     $app->post('orders', 'OrderController@post');
+    $app->put('orders/{uuid}', 'OrderController@put');
+    $app->patch('orders/{uuid}', 'OrderController@patch');
+    $app->delete('orders/{uuid}', 'OrderController@delete');
 
 });

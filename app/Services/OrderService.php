@@ -95,25 +95,58 @@ class OrderService extends AbstractService implements CrudServiceInterface
      * @throws NotFoundException
      */
     public function update($uuid, $data) {
-        $waybill = $this->orderModel->where('uuid', '=', $uuid)->first();
+        try {
 
-        if(is_null($waybill)) {
-            throw new NotFoundException();
+            DB::beginTransaction();
+
+            $products = $data['products'];
+            unset($data['products']);
+
+            $warehouse = $this->warehouseModel->where('uuid', $data['warehouse'])->first();
+            if(!is_null($warehouse)) {
+                $data['warehouse_id'] = $warehouse->id;
+            } else {
+                throw new NotFoundException();
+            }
+
+            $order = $this->orderModel->where('uuid', '=', $uuid)->first();
+            if(is_null($order)) {
+                throw new NotFoundException();
+            }
+
+            $order->fill($data);
+            $order->save();
+
+            $order->products()->detach();
+            if(isset($products) && !empty($products)) {
+                foreach ($products as $product) {
+                    $productDB = $this->productModel->where('uuid', $product['uuid'])->first();
+                    if(!is_null($productDB)) {
+                        $order->products()->attach($productDB->id, ['quantity' => $product['quantity']]);
+                    } else {
+                        throw new NotFoundException();
+                    }
+                }
+            }
+
+            DB::commit();
+
+            return $order;
+        } catch (\Exception $exception) {
+            DB::rollBack();
         }
-
-        $data = $this->clearNullParams($data);
-        $waybill->fill($data);
-        $waybill->save();
-
-        return $waybill;
     }
 
     /**
      * @param $uuid
-     * @return array
+     * @throws NotFoundException
      */
     public function delete($uuid) {
-        return [];
+        $order = $this->orderModel->where('uuid', '=', $uuid)->first();
+        if(is_null($order)) {
+            throw new NotFoundException();
+        }
+        $order->delete();
     }
 
 }

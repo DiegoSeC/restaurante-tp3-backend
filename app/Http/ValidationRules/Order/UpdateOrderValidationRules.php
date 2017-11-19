@@ -7,9 +7,11 @@ class UpdateOrderValidationRules
 
     public static function rules() {
         return [
-            'delivery_status' => 'string|in:pending,progress,completed,canceled',
-            'comment' => 'string',
-            'status' => 'string|in:active,canceled'
+            'warehouse' => 'required|string|exists:warehouses,uuid',
+            'products' => 'required|array',
+            'products.*.uuid' => 'required|string|exists:products,uuid',
+            'products.*.quantity' => 'required|integer|min:1',
+            'status' => 'required|string|in:pending,completed,canceled',
         ];
     }
 

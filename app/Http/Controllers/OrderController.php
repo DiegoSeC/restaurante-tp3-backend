@@ -96,11 +96,7 @@ class OrderController extends Controller
         $this->validateRequestJson($request);
         $this->validateParams($request, UpdateOrderValidationRules::rules());
 
-        $input = $request->only([
-            'delivery_status',
-            'comment',
-            'status'
-        ]);
+        $input = $request->all();
 
         $item = $this->orderService->update($uuid, $input);
 
@@ -121,11 +117,7 @@ class OrderController extends Controller
         $this->validateRequestJson($request);
         $this->validateExistParams($request, UpdatePartiallyOrderValidationRules::rules());
 
-        $input = $request->only([
-            'delivery_status',
-            'comment',
-            'status'
-        ]);
+        $input = $request->all();
 
         $item = $this->orderService->update($uuid, $input);
 
@@ -142,7 +134,6 @@ class OrderController extends Controller
      */
     public function delete($uuid) {
         $this->orderService->delete($uuid);
-
         return $this->responseNoContent();
     }
 
