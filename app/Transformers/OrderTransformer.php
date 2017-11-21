@@ -24,7 +24,8 @@ class OrderTransformer extends TransformerAbstract
                 'code' => $warehouse->code,
                 'name' => $warehouse->name
             ],
-            'status' => $order->status
+            'status' => $order->status,
+            'date' => $order->created_at->toDateString()
         ];
 
         return $response;

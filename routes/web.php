@@ -50,9 +50,11 @@ $app->group(['prefix' => 'api'], function () use($app) {
 
     //quotation-requests
     $app->get('quotation-requests', 'QuotationRequestController@index');
+    $app->get('quotation-requests/{uuid}', 'QuotationRequestController@get');
 
     //transfer-guides
     $app->get('transfer-guides', 'TransferGuideController@index');
+    $app->get('transfer-guides/{uuid}', 'TransferGuideController@get');
 
     //suppliers
     $app->get('suppliers', 'SupplierController@index');

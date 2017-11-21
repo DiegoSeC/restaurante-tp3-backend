@@ -136,12 +136,57 @@ $factory->define(App\Models\Supplier::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Models\SupplierHasProduct::class, function (Faker\Generator $faker) {
     return [
-        'product_id' => function($orderHasProduct) {
+        'product_id' => function($supplierHasProduct) {
             return App\Models\Product::inRandomOrder()->first()->id ?: factory(App\Models\Product::class)->create()->id;
         },
-        'supplier_id' => function($orderHasProduct) {
+        'supplier_id' => function($supplierHasProduct) {
             return App\Models\Supplier::inRandomOrder()->first()->id ?: factory(App\Models\Supplier::class)->create()->id;
         }
     ];
 });
 
+$factory->define(App\Models\QuotationRequest::class, function (Faker\Generator $faker) {
+    return [
+        'uuid' => $faker->uuid,
+        'order_id' => function($quotationRequest) {
+            return App\Models\Order::inRandomOrder()->first()->id ?: factory(App\Models\Order::class)->create()->id;
+        },
+        'document_number' => $faker->randomNumber(8),
+        'status' => 'pending'
+    ];
+});
+
+$factory->define(App\Models\QuotationRequestHasProduct::class, function (Faker\Generator $faker) {
+    return [
+        'product_id' => function($quotationRequestHasProduct) {
+            return App\Models\Product::inRandomOrder()->first()->id ?: factory(App\Models\Product::class)->create()->id;
+        },
+        'quotation_request_id' => function($quotationRequestHasProduct) {
+            return App\Models\QuotationRequest::inRandomOrder()->first()->id ?: factory(App\Models\QuotationRequest::class)->create()->id;
+        },
+        'quantity' => $faker->randomNumber(2)
+    ];
+});
+
+$factory->define(App\Models\TransferGuide::class, function (Faker\Generator $faker) {
+    return [
+        'uuid' => $faker->uuid,
+        'order_id' => function($transferGuide) {
+            return App\Models\Order::inRandomOrder()->first()->id ?: factory(App\Models\Order::class)->create()->id;
+        },
+        'document_number' => $faker->randomNumber(8),
+        'status' => 'active'
+    ];
+});
+
+$factory->define(App\Models\TransferGuideHasProduct::class, function (Faker\Generator $faker) {
+    return [
+        'product_id' => function($transferGuideHasProduct) {
+            return App\Models\Product::inRandomOrder()->first()->id ?: factory(App\Models\Product::class)->create()->id;
+        },
+        'transfer_guide_id' => function($transferGuideHasProduct) {
+            return App\Models\TransferGuide::inRandomOrder()->first()->id ?: factory(App\Models\TransferGuide::class)->create()->id;
+        },
+        'quantity' => $faker->randomNumber(2)
+    ];
+});
