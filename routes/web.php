@@ -48,4 +48,14 @@ $app->group(['prefix' => 'api'], function () use($app) {
     //trucks
     $app->get('trucks', 'TruckController@index');
 
+    //quotation-requests
+    $app->get('quotation-requests', 'QuotationRequestController@index');
+
+    //transfer-guides
+    $app->get('transfer-guides', 'TransferGuideController@index');
+
+    //suppliers
+    $app->get('suppliers', 'SupplierController@index');
+    $app->get('suppliers/{uuid}', 'SupplierController@get');
+
 });

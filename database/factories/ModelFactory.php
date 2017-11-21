@@ -121,3 +121,27 @@ $factory->define(App\Models\OrderHasProduct::class, function (Faker\Generator $f
         'quantity' => $faker->randomNumber(2)
     ];
 });
+
+$factory->define(App\Models\Supplier::class, function (Faker\Generator $faker) {
+    return [
+        'uuid' => $faker->uuid,
+        'document_number' => $faker->randomNumber(9),
+        'name' => $faker->company,
+        'contact_name' => $faker->name,
+        'address' => $faker->address,
+        'phone_number' => $faker->phoneNumber
+    ];
+});
+
+
+$factory->define(App\Models\SupplierHasProduct::class, function (Faker\Generator $faker) {
+    return [
+        'product_id' => function($orderHasProduct) {
+            return App\Models\Product::inRandomOrder()->first()->id ?: factory(App\Models\Product::class)->create()->id;
+        },
+        'supplier_id' => function($orderHasProduct) {
+            return App\Models\Supplier::inRandomOrder()->first()->id ?: factory(App\Models\Supplier::class)->create()->id;
+        }
+    ];
+});
+

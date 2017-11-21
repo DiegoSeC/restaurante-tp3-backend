@@ -33,4 +33,12 @@ class Order extends Model
         return $this->belongsTo('App\Models\Warehouse');
     }
 
+    public function quotation_request() {
+        return $this->hasOne('App\Model\QuotationRequest');
+    }
+
+    public function transfer_guide() {
+        return $this->hasOne('App\Model\TransferGuide');
+    }
+
 }

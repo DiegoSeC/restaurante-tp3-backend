@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OrderHasProduct extends Model
+class SupplierHasProduct extends Model
 {
 
     /**
@@ -13,15 +13,15 @@ class OrderHasProduct extends Model
      * @var array
      */
     protected $fillable = [
-        'order_id', 'product_id', 'quantity'
+        'supplier_id', 'product_id'
     ];
 
     public function product() {
         return $this->belongsTo('App\Models\Product');
     }
 
-    public function order() {
-        return $this->belongsTo('App\Models\Order');
+    public function supplier() {
+        return $this->belongsTo('App\Models\Supplier');
     }
 
 }

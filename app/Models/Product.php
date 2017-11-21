@@ -37,4 +37,11 @@ class Product extends Model
         return $this->belongsToMany('App\Models\InventoryMovement', 'inventory_movements_has_products');
     }
 
+    public function quotation_requests() {
+        return $this->belongsToMany('App\Models\QuotationRequest', 'quotation_request_has_products')->withPivot('quantity');
+    }
+
+    public function transfer_guides() {
+        return $this->belongsToMany('App\Models\TransferGuide', 'transfer_guide_has_products')->withPivot('quantity');
+    }
 }
