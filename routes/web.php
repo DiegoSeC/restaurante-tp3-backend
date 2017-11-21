@@ -41,4 +41,11 @@ $app->group(['prefix' => 'api'], function () use($app) {
     $app->patch('orders/{uuid}', 'OrderController@patch');
     $app->delete('orders/{uuid}', 'OrderController@delete');
 
+
+    //carriers
+    $app->get('carriers', 'CarrierController@index');
+
+    //trucks
+    $app->get('trucks', 'TruckController@index');
+
 });
