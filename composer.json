@@ -10,7 +10,8 @@
         "vlucas/phpdotenv": "~2.2",
         "webpatser/laravel-uuid": "^2.2",
         "spatie/laravel-fractal": "^4.5",
-        "doctrine/dbal": "^2.5"
+        "doctrine/dbal": "^2.5",
+        "vluzrmos/lumen-cors": "2.1.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
