@@ -35,6 +35,7 @@ $app->withEloquent();
 */
 
 $app->configure('exception');
+$app->configure('cors');
 
 /*
 |--------------------------------------------------------------------------
@@ -69,8 +70,7 @@ $app->singleton(
 */
 
 $app->middleware([
-  'Vluzrmos\LumenCors\CorsMiddleware'
-//    App\Http\Middleware\ExampleMiddleware::class
+    \Barryvdh\Cors\HandleCors::class,
 ]);
 
 // $app->routeMiddleware([
@@ -95,6 +95,8 @@ $app->middleware([
 if (class_exists(Spatie\Fractal\FractalServiceProvider::class)) {
     $app->register(Spatie\Fractal\FractalServiceProvider::class);
 }
+
+$app->register(Barryvdh\Cors\ServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
