@@ -10,6 +10,17 @@ class QuotationRequestProductTransformer extends TransformerAbstract
 
     public function transform(Product $product)
     {
+        $suppliers = $product->suppliers()->get();
+
+        $suppliersArray = [];
+        foreach ($suppliers as $supplier) {
+            $suppliersArray[] = [
+                'uuid' => $supplier->uuid,
+                'document_number' => $supplier->document_number,
+                'name' => $supplier->name
+            ];
+        }
+
         $category = $product->product_category;
         $response = [
             'uuid' => $product->uuid,
@@ -17,7 +28,8 @@ class QuotationRequestProductTransformer extends TransformerAbstract
             'name' => $product->name,
             'unit_of_measurement' => $product->unit_of_measurement,
             'category' => $category->name,
-            'quantity' => $product->pivot->quantity
+            'quantity' => $product->pivot->quantity,
+            'suppliers' => $suppliersArray
         ];
 
         return $response;

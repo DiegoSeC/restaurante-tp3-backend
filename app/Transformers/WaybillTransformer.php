@@ -18,12 +18,11 @@ class WaybillTransformer extends TransformerAbstract
         $truck = $waybill->truck;
         $warehouseFrom = $waybill->warehouse_from;
         $warehouseTo = $waybill->warehouse_to;
+        $order = $waybill->order;
 
         $response = [
             'uuid' => $waybill->uuid,
             'document_number' => $waybill->document_number,
-            'date' => $carbon->toDateString(),
-            'time' => $carbon->toTimeString(),
             'carrier' => [
                 'uuid' => $carrier->uuid,
                 'driver_license' => $carrier->driver_license,
@@ -53,9 +52,15 @@ class WaybillTransformer extends TransformerAbstract
                 'longitude' => $warehouseTo->longitude,
                 'latitude' => $warehouseTo->latitude
             ],
+            'order' => [
+                'uuid' => $order->uuid,
+                'document_number' => $order->document_number,
+            ],
             'comment' => $waybill->comment,
             'delivery_status' => (string) $waybill->delivery_status,
-            'status' => (string) $waybill->status
+            'status' => (string) $waybill->status,
+            'date' => $carbon->toDateString(),
+            'time' => $carbon->toTimeString()
         ];
 
         return $response;

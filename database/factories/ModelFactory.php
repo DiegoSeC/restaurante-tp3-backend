@@ -57,29 +57,6 @@ $factory->define(App\Models\Carrier::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Models\Waybill::class, function (Faker\Generator $faker) {
-    return [
-        'uuid' => $faker->uuid,
-        'document_number' => $faker->randomNumber(9),
-        'carrier_id' => function($waybill) {
-            return App\Models\Carrier::inRandomOrder()->first()->id ?: factory(App\Models\Carrier::class)->create()->id;
-        },
-        'truck_id' => function($waybill) {
-            return App\Models\Truck::inRandomOrder()->first()->id ?: factory(App\Models\Truck::class)->create()->id;
-        },
-        'warehouse_from_id' => function($waybill) {
-            return App\Models\Warehouse::inRandomOrder()->first()->id ?: factory(App\Models\Warehouse::class)->create()->id;
-        },
-        'warehouse_to_id' => function($waybill) {
-            return App\Models\Warehouse::inRandomOrder()->first()->id ?: factory(App\Models\Warehouse::class)->create()->id;
-        },
-        'date_time' => $faker->dateTime,
-        'comment' => null,
-        'delivery_status' => 'pending',
-        'status' => 'active'
-    ];
-});
-
 $factory->define(App\Models\ProductCategory::class, function (Faker\Generator $faker) {
     return [
         'uuid' => $faker->uuid,
@@ -188,5 +165,31 @@ $factory->define(App\Models\TransferGuideHasProduct::class, function (Faker\Gene
             return App\Models\TransferGuide::inRandomOrder()->first()->id ?: factory(App\Models\TransferGuide::class)->create()->id;
         },
         'quantity' => $faker->randomNumber(2)
+    ];
+});
+
+$factory->define(App\Models\Waybill::class, function (Faker\Generator $faker) {
+    return [
+        'uuid' => $faker->uuid,
+        'document_number' => $faker->randomNumber(9),
+        'carrier_id' => function($waybill) {
+            return App\Models\Carrier::inRandomOrder()->first()->id ?: factory(App\Models\Carrier::class)->create()->id;
+        },
+        'truck_id' => function($waybill) {
+            return App\Models\Truck::inRandomOrder()->first()->id ?: factory(App\Models\Truck::class)->create()->id;
+        },
+        'warehouse_from_id' => function($waybill) {
+            return App\Models\Warehouse::inRandomOrder()->first()->id ?: factory(App\Models\Warehouse::class)->create()->id;
+        },
+        'warehouse_to_id' => function($waybill) {
+            return App\Models\Warehouse::inRandomOrder()->first()->id ?: factory(App\Models\Warehouse::class)->create()->id;
+        },
+        'order_id' => function($waybill) {
+            return App\Models\Order::inRandomOrder()->first()->id ?: factory(App\Models\Order::class)->create()->id;
+        },
+        'date_time' => $faker->dateTime,
+        'comment' => null,
+        'delivery_status' => 'pending',
+        'status' => 'active'
     ];
 });

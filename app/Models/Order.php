@@ -41,4 +41,8 @@ class Order extends Model
         return $this->hasOne('App\Model\TransferGuide');
     }
 
+    public function waybill() {
+        return $this->hasOne('App\Model\Waybill');
+    }
+
 }

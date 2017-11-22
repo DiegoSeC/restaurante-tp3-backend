@@ -26,7 +26,7 @@ class Product extends Model
     }
 
     public function orders() {
-        return $this->belongsToMany('App\Models\Order', 'order_has_products')->withPivot('quantity');
+        return $this->belongsToMany('App\Models\Order', 'order_has_products')->withPivot('quantity')->withTimestamps();
     }
 
     public function warehouses() {
@@ -38,10 +38,14 @@ class Product extends Model
     }
 
     public function quotation_requests() {
-        return $this->belongsToMany('App\Models\QuotationRequest', 'quotation_request_has_products')->withPivot('quantity');
+        return $this->belongsToMany('App\Models\QuotationRequest', 'quotation_request_has_products')->withPivot('quantity')->withTimestamps();
     }
 
     public function transfer_guides() {
-        return $this->belongsToMany('App\Models\TransferGuide', 'transfer_guide_has_products')->withPivot('quantity');
+        return $this->belongsToMany('App\Models\TransferGuide', 'transfer_guide_has_products')->withPivot('quantity')->withTimestamps();
+    }
+
+    public function suppliers() {
+        return $this->belongsToMany('App\Models\Supplier', 'supplier_has_products')->withTimestamps();
     }
 }
