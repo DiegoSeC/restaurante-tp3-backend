@@ -9,8 +9,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class TransferGuide extends Model
 {
 
-    const TRANSFER_GUIDE_STATUS_ACTIVE = 'pending';
-    const TRANSFER_GUIDE_STATUS_INACTIVE = 'completed';
+    const DOCUMENT_NUMBER_PREFIX = 'GS';
+
+    const TRANSFER_GUIDE_STATUS_ACTIVE = 'active';
+    const TRANSFER_GUIDE_STATUS_INACTIVE = 'inactive';
 
     use ModelUuidTrait;
     use SoftDeletes;
@@ -21,7 +23,7 @@ class TransferGuide extends Model
      * @var array
      */
     protected $fillable = [
-        'uuid', 'order_id', 'document_number', 'status'
+        'uuid', 'order_id', 'document_number', 'status', 'warehouse_from_id', 'warehouse_to_id'
     ];
 
     public function products() {
@@ -30,6 +32,14 @@ class TransferGuide extends Model
 
     public function order() {
         return $this->belongsTo('App\Models\Order');
+    }
+
+    public function warehouse_from() {
+        return $this->belongsTo('App\Models\Warehouse');
+    }
+
+    public function warehouse_to() {
+        return $this->belongsTo('App\Models\Warehouse');
     }
 
 }

@@ -56,6 +56,7 @@ class WaybillController extends Controller
 
         if(!is_null($item)) {
             $response = fractal()->item($item, new WaybillTransformer(), 'data')
+                ->parseIncludes(['products'])
                 ->serializeWith(new CustomSerializer())
                 ->toArray();
 
@@ -99,7 +100,13 @@ class WaybillController extends Controller
         $input = $request->only([
             'delivery_status',
             'comment',
-            'status'
+            'status',
+            'warehouse_from',
+            'warehouse_to',
+            'order',
+            'products',
+            'carrier',
+            'truck'
         ]);
 
         $item = $this->waybillService->update($uuid, $input);
@@ -124,7 +131,13 @@ class WaybillController extends Controller
         $input = $request->only([
            'delivery_status',
             'comment',
-            'status'
+            'status',
+            'warehouse_from',
+            'warehouse_to',
+            'order',
+            'products',
+            'carrier',
+            'truck'
         ]);
 
         $item = $this->waybillService->update($uuid, $input);

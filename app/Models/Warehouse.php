@@ -29,6 +29,14 @@ class Warehouse extends Model
         return $this->hasMany('App\Models\Waybill', 'warehouse_to_id');
     }
 
+    public function transfer_guides_from() {
+        return $this->hasMany('App\Models\TransferGuide', 'warehouse_from_id');
+    }
+
+    public function transfer_guides_to() {
+        return $this->hasMany('App\Models\TransferGuide', 'warehouse_to_id');
+    }
+
     public function products() {
         return $this->belongsToMany('App\Models\Product', 'warehouse_has_products')->withPivot(['stock', 'minimum_stock', 'maximum_stock'])->withTimestamps();
     }

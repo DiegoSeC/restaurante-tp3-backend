@@ -2,12 +2,15 @@
 
 namespace App\Services;
 
+use App\Exceptions\Classes\NotCreatedException;
 use App\Exceptions\Classes\NotFoundException;
+use App\Exceptions\Classes\NotUpdatedException;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Warehouse;
 use App\Services\Traits\ClearNullInputsTrait;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class OrderService extends AbstractService implements CrudServiceInterface
 {
@@ -46,6 +49,8 @@ class OrderService extends AbstractService implements CrudServiceInterface
     /**
      * @param $data
      * @return Order|null
+     * @throws NotCreatedException
+     * @throws NotFoundException
      */
     public function create($data) {
         try {
@@ -68,7 +73,7 @@ class OrderService extends AbstractService implements CrudServiceInterface
 
             $this->orderModel->update([
                 'uuid' => $this->orderModel->generateUuid(),
-                'document_number' => str_pad($this->orderModel->id, 10, '0', STR_PAD_LEFT)
+                'document_number' => $this->documentNumberGenerator(Order::DOCUMENT_NUMBER_PREFIX, 10, $this->orderModel->id)
             ]);
 
             foreach ($products as $product) {
@@ -83,8 +88,14 @@ class OrderService extends AbstractService implements CrudServiceInterface
             DB::commit();
 
             return $this->orderModel;
+
+        } catch (NotFoundException $exception){
+            DB::rollBack();
+            throw $exception;
         } catch (\Exception $exception) {
             DB::rollBack();
+            Log::error($exception->getMessage());
+            throw new NotCreatedException(null);
         }
     }
 
@@ -93,6 +104,7 @@ class OrderService extends AbstractService implements CrudServiceInterface
      * @param $data
      * @return \Illuminate\Database\Eloquent\Model|null|static
      * @throws NotFoundException
+     * @throws NotUpdatedException
      */
     public function update($uuid, $data) {
         try {
@@ -102,11 +114,13 @@ class OrderService extends AbstractService implements CrudServiceInterface
             $products = $data['products'];
             unset($data['products']);
 
-            $warehouse = $this->warehouseModel->where('uuid', $data['warehouse'])->first();
-            if(!is_null($warehouse)) {
-                $data['warehouse_id'] = $warehouse->id;
-            } else {
-                throw new NotFoundException();
+            if(isset($data['warehouse']) && !empty($data['warehouse'])) {
+                $warehouse = $this->warehouseModel->where('uuid', $data['warehouse'])->first();
+                if(!is_null($warehouse)) {
+                    $data['warehouse_id'] = $warehouse->id;
+                } else {
+                    throw new NotFoundException();
+                }
             }
 
             $order = $this->orderModel->where('uuid', '=', $uuid)->first();
@@ -114,11 +128,12 @@ class OrderService extends AbstractService implements CrudServiceInterface
                 throw new NotFoundException();
             }
 
+            $data = $this->clearNullParams($data);
             $order->fill($data);
             $order->save();
 
-            $order->products()->detach();
             if(isset($products) && !empty($products)) {
+                $order->products()->detach();
                 foreach ($products as $product) {
                     $productDB = $this->productModel->where('uuid', $product['uuid'])->first();
                     if(!is_null($productDB)) {
@@ -132,8 +147,14 @@ class OrderService extends AbstractService implements CrudServiceInterface
             DB::commit();
 
             return $order;
+
+        } catch (NotFoundException $exception){
+            DB::rollBack();
+            throw $exception;
         } catch (\Exception $exception) {
             DB::rollBack();
+            Log::error($exception->getMessage());
+            throw new NotUpdatedException(null);
         }
     }
 

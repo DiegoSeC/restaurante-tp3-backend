@@ -9,7 +9,15 @@ class UpdatePartiallyWaybillValidationRules
         return [
             'delivery_status' => 'string|in:pending,progress,completed,canceled',
             'comment' => 'string',
-            'status' => 'string|in:active,canceled'
+            'status' => 'string|in:active,canceled',
+            'warehouse_from' => 'string|exists:warehouses,uuid',
+            'warehouse_to' => 'string|exists:warehouses,uuid|different:warehouse_from',
+            'order' => 'exists:orders,uuid',
+            'products' => 'array',
+            'products.*.uuid' => 'required|string|exists:products,uuid',
+            'products.*.quantity' => 'required|integer|min:1',
+            'carrier' => 'exists:carriers,uuid',
+            'truck' => 'exists:trucks,uuid'
         ];
     }
 

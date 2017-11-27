@@ -51,10 +51,18 @@ $app->group(['prefix' => 'api'], function () use($app) {
     //quotation-requests
     $app->get('quotation-requests', 'QuotationRequestController@index');
     $app->get('quotation-requests/{uuid}', 'QuotationRequestController@get');
+    $app->post('quotation-requests', 'QuotationRequestController@post');
+    $app->put('quotation-requests/{uuid}', 'QuotationRequestController@put');
+    $app->patch('quotation-requests/{uuid}', 'QuotationRequestController@patch');
+    $app->delete('quotation-requests/{uuid}', 'QuotationRequestController@delete');
 
     //transfer-guides
     $app->get('transfer-guides', 'TransferGuideController@index');
     $app->get('transfer-guides/{uuid}', 'TransferGuideController@get');
+    $app->post('transfer-guides', 'TransferGuideController@post');
+    $app->put('transfer-guides/{uuid}', 'TransferGuideController@put');
+    $app->patch('transfer-guides/{uuid}', 'TransferGuideController@patch');
+    $app->delete('transfer-guides/{uuid}', 'TransferGuideController@delete');
 
     //suppliers
     $app->get('suppliers', 'SupplierController@index');

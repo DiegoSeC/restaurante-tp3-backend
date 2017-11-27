@@ -48,4 +48,8 @@ class Product extends Model
     public function suppliers() {
         return $this->belongsToMany('App\Models\Supplier', 'supplier_has_products')->withTimestamps();
     }
+
+    public function waybills() {
+        return $this->belongsToMany('App\Models\Waybill', 'waybill_has_products')->withPivot('quantity')->withTimestamps();
+    }
 }

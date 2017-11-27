@@ -9,6 +9,10 @@ use League\Fractal\TransformerAbstract;
 class WaybillTransformer extends TransformerAbstract
 {
 
+    protected $availableIncludes = [
+        'products'
+    ];
+
     public function transform(Waybill $waybill)
     {
 
@@ -65,4 +69,11 @@ class WaybillTransformer extends TransformerAbstract
 
         return $response;
     }
+
+    public function includeProducts(Waybill $waybill)
+    {
+        $products = $waybill->products()->get();
+        return $this->collection($products, new WaybillProductTransformer(), false);
+    }
+
 }

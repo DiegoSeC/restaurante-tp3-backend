@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class QuotationRequest extends Model
 {
 
+    const DOCUMENT_NUMBER_PREFIX = 'SC';
+
     const QUOTATION_REQUEST_STATUS_PENDING = 'pending';
     const QUOTATION_REQUEST_STATUS_COMPLETED = 'completed';
     const QUOTATION_REQUEST_STATUS_CANCELED = 'canceled';

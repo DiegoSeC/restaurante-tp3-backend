@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Order extends Model
 {
 
+    const DOCUMENT_NUMBER_PREFIX = 'NP';
+
     const ORDER_STATUS_PENDING = 'pending';
     const ORDER_STATUS_COMPLETED = 'completed';
     const ORDER_STATUS_CANCELED = 'canceled';

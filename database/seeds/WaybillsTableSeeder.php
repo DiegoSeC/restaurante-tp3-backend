@@ -12,5 +12,6 @@ class WaybillsTableSeeder extends Seeder
     public function run()
     {
         factory(App\Models\Waybill::class, 20)->create();
+        factory(App\Models\WaybillHasProduct::class, 150)->create();
     }
 }
