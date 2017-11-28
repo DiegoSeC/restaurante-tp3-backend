@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Traits\ModelUuidTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Product extends Model
 {
@@ -52,4 +53,22 @@ class Product extends Model
     public function waybills() {
         return $this->belongsToMany('App\Models\Waybill', 'waybill_has_products')->withPivot('quantity')->withTimestamps();
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getTopRatedSuppliers() {
+        $result = $this->suppliers()
+            ->select('suppliers.*', DB::raw('sum(supplier_has_evaluation_rules.value * (evaluation_rules.percentage/100)) as qualification'))
+            ->join('supplier_has_evaluation_rules','suppliers.id', '=', 'supplier_has_evaluation_rules.supplier_id')
+            ->join('evaluation_rules','evaluation_rules.id', '=', 'supplier_has_evaluation_rules.evaluation_rule_id')
+            ->orderByRaw('sum(supplier_has_evaluation_rules.value * (evaluation_rules.percentage/100)) DESC')
+            ->groupBy('suppliers.id')
+            ->limit(2)
+            //->having(DB::raw('sum(supplier_has_evaluation_rules.value * (evaluation_rules.percentage/100))'), '>', '3.5')
+            ->get();
+
+        return Supplier::hydrate($result->toArray());
+    }
+
 }

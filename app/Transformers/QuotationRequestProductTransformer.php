@@ -10,14 +10,15 @@ class QuotationRequestProductTransformer extends TransformerAbstract
 
     public function transform(Product $product)
     {
-        $suppliers = $product->suppliers()->get();
+        $suppliers = $product->getTopRatedSuppliers();
 
         $suppliersArray = [];
         foreach ($suppliers as $supplier) {
             $suppliersArray[] = [
                 'uuid' => $supplier->uuid,
                 'document_number' => $supplier->document_number,
-                'name' => $supplier->name
+                'name' => $supplier->name,
+                'qualification' => (float) number_format($supplier->qualification, 2)
             ];
         }
 

@@ -6,6 +6,7 @@ use App\Exceptions\Classes\NotFoundException;
 use App\Http\Controllers\Traits\ResponseTrait;
 use App\Http\Controllers\Traits\ValidationRequestTrait;
 use App\Http\ValidationRules\Order\CreateOrderValidationRules;
+use App\Http\ValidationRules\Order\FilterOrderValidationRules;
 use App\Http\ValidationRules\Order\UpdateOrderValidationRules;
 use App\Http\ValidationRules\Order\UpdatePartiallyOrderValidationRules;
 use App\Serializers\CustomSerializer;
@@ -31,11 +32,15 @@ class OrderController extends Controller
     }
 
     /**
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index() {
+    public function index(Request $request) {
 
-        $data = $this->orderService->getAll();
+        $this->validateParams($request, FilterOrderValidationRules::rules());
+        $filters = $request->only(['status']);
+
+        $data = $this->orderService->getAll($filters);
 
         $response = fractal()->collection($data, new OrderTransformer(), 'data')
             ->serializeWith(new CustomSerializer())

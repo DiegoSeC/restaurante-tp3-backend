@@ -32,10 +32,17 @@ class OrderService extends AbstractService implements CrudServiceInterface
     }
 
     /**
+     * @param array $filters
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function getAll() {
-        return $this->orderModel->orderBy('created_at', 'desc')->get();
+    public function getAll($filters = []) {
+        $query = $this->orderModel;
+
+        if(isset($filters['status']) && !empty($filters['status'])) {
+            $query = $query->where('status', '=', $filters['status']);
+        }
+
+        return $query->orderBy('created_at', 'desc')->get();
     }
 
     /**

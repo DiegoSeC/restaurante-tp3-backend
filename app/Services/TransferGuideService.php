@@ -103,6 +103,9 @@ class TransferGuideService extends AbstractService
                 }
             }
 
+            $order->status = Order::ORDER_STATUS_COMPLETED;
+            $order->save();
+
             DB::commit();
 
             return $this->transferGuideModel;
