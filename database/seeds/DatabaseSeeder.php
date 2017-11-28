@@ -23,5 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(QuotationRequestsTableSeeder::class);
         $this->call(TransferGuidesTableSeeder::class);
         $this->call(WaybillsTableSeeder::class);
+        $this->call(EvaluationRulesTableSeeder::class);
+        $this->call(SupplierHasEvaluationRulesTableSeeder::class);
     }
 }

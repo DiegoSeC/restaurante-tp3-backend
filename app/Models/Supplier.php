@@ -24,4 +24,8 @@ class Supplier extends Model
     public function products() {
         return $this->belongsToMany('App\Models\Product', 'supplier_has_products')->withTimestamps();
     }
+
+    public function evaluation_rules() {
+        return $this->belongsToMany('App\Models\EvaluationRule', 'supplier_has_evaluation_rules')->withPivot('value')->withTimestamps();
+    }
 }
