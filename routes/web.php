@@ -68,4 +68,6 @@ $app->group(['prefix' => 'api'], function () use($app) {
     $app->get('suppliers', 'SupplierController@index');
     $app->get('suppliers/{uuid}', 'SupplierController@get');
 
+    //test
+    $app->get('test/email', 'TestController@email');
 });

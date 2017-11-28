@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Exceptions\Classes\NotCreatedException;
 use App\Exceptions\Classes\NotFoundException;
 use App\Exceptions\Classes\NotUpdatedException;
+use App\Mail\Traits\SendEmailTrait;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\QuotationRequest;
@@ -16,6 +17,7 @@ class QuotationRequestService extends AbstractService
 {
 
     use ClearNullInputsTrait;
+    use SendEmailTrait;
 
     private $quotationRequestModel = null;
     private $productModel = null;
@@ -77,16 +79,34 @@ class QuotationRequestService extends AbstractService
                 'document_number' => $this->documentNumberGenerator(QuotationRequest::DOCUMENT_NUMBER_PREFIX, 10, $this->quotationRequestModel->id)
             ]);
 
+            $mailableData = [];
+
             foreach ($products as $product) {
                 $productDB = $this->productModel->where('uuid', $product['uuid'])->first();
                 if(!is_null($productDB)) {
                     $this->quotationRequestModel->products()->attach($productDB->id, ['quantity' => $product['quantity']]);
+
+                    $suppliers = $productDB->getTopRatedSuppliers();
+                    foreach ($suppliers as $supplier) {
+                        $mailableData[$supplier['uuid']]['name'] = $supplier->name;
+                        $mailableData[$supplier['uuid']]['email'] = $supplier->email;
+                        $mailableData[$supplier['uuid']]['products'][] = ['name' => $productDB->name, 'quantity' => $product['quantity']];
+                    }
+
                 } else {
                     throw new NotFoundException();
                 }
             }
 
             DB::commit();
+
+            foreach ($mailableData as $mailableElement) {
+                $dataEmail = [
+                    'supplier' => $mailableElement['name'],
+                    'products' => $mailableElement['products']
+                ];
+                $this->sendEmail('Hola ' . $mailableElement['name'], $mailableElement['email'], 'emails.quotation-request', $dataEmail);
+            }
 
             return $this->quotationRequestModel;
 

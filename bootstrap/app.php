@@ -35,6 +35,7 @@ $app->withEloquent();
 */
 
 $app->configure('exception');
+$app->configure('mail');
 
 /*
 |--------------------------------------------------------------------------
@@ -93,6 +94,16 @@ $app->middleware([
 
 if (class_exists(Spatie\Fractal\FractalServiceProvider::class)) {
     $app->register(Spatie\Fractal\FractalServiceProvider::class);
+}
+
+if (class_exists(Illuminate\Queue\QueueServiceProvider::class)) {
+    $app->make('queue');
+    $app->register(Illuminate\Queue\QueueServiceProvider::class);
+}
+
+if (class_exists(Illuminate\Mail\MailServiceProvider::class)) {
+    $app->register(Illuminate\Mail\MailServiceProvider::class);
+    $app->alias('mailer',\Illuminate\Contracts\Mail\Mailer::class);
 }
 
 /*
