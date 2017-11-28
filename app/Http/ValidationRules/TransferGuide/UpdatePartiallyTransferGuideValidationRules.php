@@ -13,7 +13,9 @@ class UpdatePartiallyTransferGuideValidationRules
             'products.*.quantity' => 'required|integer|min:1',
             'status' => 'string|in:active,inactive',
             'warehouse_from' => 'string|exists:warehouses,uuid',
-            'warehouse_to' => 'string|exists:warehouses,uuid|different:warehouse_from'
+            'warehouse_to' => 'string|exists:warehouses,uuid|different:warehouse_from',
+            'comment' => 'string',
+            'contact' => 'string'
         ];
     }
 

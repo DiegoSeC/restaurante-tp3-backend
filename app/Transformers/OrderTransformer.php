@@ -31,7 +31,8 @@ class OrderTransformer extends TransformerAbstract
                 'latitude' => $warehouse->latitude
             ],
             'status' => $order->status,
-            'date' => $order->created_at->toDateString()
+            'date' => $order->created_at->toDateString(),
+            'comment' => $order->comment
         ];
 
         return $response;

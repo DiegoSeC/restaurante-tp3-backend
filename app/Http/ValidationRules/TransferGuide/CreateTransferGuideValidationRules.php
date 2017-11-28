@@ -12,7 +12,9 @@ class CreateTransferGuideValidationRules
             'products.*.uuid' => 'required|string|exists:products,uuid',
             'products.*.quantity' => 'required|integer|min:1',
             'warehouse_from' => 'required|string|exists:warehouses,uuid',
-            'warehouse_to' => 'required|string|exists:warehouses,uuid|different:warehouse_from'
+            'warehouse_to' => 'required|string|exists:warehouses,uuid|different:warehouse_from',
+            'comment' => 'string',
+            'contact' => 'string'
         ];
     }
 

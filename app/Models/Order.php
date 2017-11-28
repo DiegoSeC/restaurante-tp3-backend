@@ -24,7 +24,7 @@ class Order extends Model
      * @var array
      */
     protected $fillable = [
-        'uuid', 'warehouse_id', 'document_number', 'status'
+        'uuid', 'warehouse_id', 'document_number', 'status', 'comment'
     ];
 
     public function products() {

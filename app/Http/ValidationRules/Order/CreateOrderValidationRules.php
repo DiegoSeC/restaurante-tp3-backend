@@ -11,6 +11,7 @@ class CreateOrderValidationRules
             'products' => 'required|array',
             'products.*.uuid' => 'required|string|exists:products,uuid',
             'products.*.quantity' => 'required|integer|min:1',
+            'comment' => 'string',
         ];
     }
 

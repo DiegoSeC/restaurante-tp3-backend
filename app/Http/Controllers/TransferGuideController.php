@@ -105,7 +105,9 @@ class TransferGuideController extends Controller
             'products',
             'status',
             'warehouse_from',
-            'warehouse_to'
+            'warehouse_to',
+            'comment',
+            'contact'
         ]);
 
         $item = $this->transferGuideService->update($uuid, $input);
@@ -132,7 +134,9 @@ class TransferGuideController extends Controller
             'products',
             'status',
             'warehouse_from',
-            'warehouse_to'
+            'warehouse_to',
+            'comment',
+            'contact'
         ]);
 
         $item = $this->transferGuideService->update($uuid, $input);

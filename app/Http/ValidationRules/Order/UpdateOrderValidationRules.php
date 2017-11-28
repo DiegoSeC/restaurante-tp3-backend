@@ -12,6 +12,7 @@ class UpdateOrderValidationRules
             'products.*.uuid' => 'required|string|exists:products,uuid',
             'products.*.quantity' => 'required|integer|min:1',
             'status' => 'required|string|in:pending,completed,canceled',
+            'comment' => 'string',
         ];
     }
 

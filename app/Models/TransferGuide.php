@@ -23,7 +23,7 @@ class TransferGuide extends Model
      * @var array
      */
     protected $fillable = [
-        'uuid', 'order_id', 'document_number', 'status', 'warehouse_from_id', 'warehouse_to_id'
+        'uuid', 'order_id', 'document_number', 'status', 'warehouse_from_id', 'warehouse_to_id', 'contact', 'comment'
     ];
 
     public function products() {

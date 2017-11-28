@@ -48,8 +48,9 @@ class TransferGuideTransformer extends TransformerAbstract
                 'uuid' => $order->uuid,
                 'document_number' => $order->document_number,
             ],
-            'date' => $transferGuide->created_at->toDateString()
-
+            'date' => $transferGuide->created_at->toDateString(),
+            'comment' => $transferGuide->comment,
+            'contact' => $transferGuide->contact
         ];
 
         return $response;

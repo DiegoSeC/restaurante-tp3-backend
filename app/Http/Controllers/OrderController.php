@@ -101,7 +101,12 @@ class OrderController extends Controller
         $this->validateRequestJson($request);
         $this->validateParams($request, UpdateOrderValidationRules::rules());
 
-        $input = $request->all();
+        $input = $request->only([
+            'warehouse',
+            'products',
+            'status',
+            'comment'
+        ]);
 
         $item = $this->orderService->update($uuid, $input);
 
@@ -122,7 +127,12 @@ class OrderController extends Controller
         $this->validateRequestJson($request);
         $this->validateExistParams($request, UpdatePartiallyOrderValidationRules::rules());
 
-        $input = $request->all();
+        $input = $request->only([
+            'warehouse',
+            'products',
+            'status',
+            'comment'
+        ]);
 
         $item = $this->orderService->update($uuid, $input);
 
