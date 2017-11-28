@@ -11,7 +11,7 @@ class UpdatePartiallyTransferGuideValidationRules
             'products' => 'array',
             'products.*.uuid' => 'required|string|exists:products,uuid',
             'products.*.quantity' => 'required|integer|min:1',
-            'status' => 'string|in:pending,completed,canceled',
+            'status' => 'string|in:active,inactive',
             'warehouse_from' => 'string|exists:warehouses,uuid',
             'warehouse_to' => 'string|exists:warehouses,uuid|different:warehouse_from'
         ];
