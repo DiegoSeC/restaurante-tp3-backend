@@ -118,6 +118,11 @@ class OrderService extends AbstractService implements CrudServiceInterface
 
             DB::beginTransaction();
 
+            $order = $this->orderModel->where('uuid', '=', $uuid)->first();
+            if(is_null($order)) {
+                throw new NotFoundException();
+            }
+
             if(isset($data['warehouse']) && !empty($data['warehouse'])) {
                 $warehouse = $this->warehouseModel->where('uuid', $data['warehouse'])->first();
                 if(!is_null($warehouse)) {
@@ -127,10 +132,6 @@ class OrderService extends AbstractService implements CrudServiceInterface
                 }
             }
 
-            $order = $this->orderModel->where('uuid', '=', $uuid)->first();
-            if(is_null($order)) {
-                throw new NotFoundException();
-            }
 
             $data = $this->clearNullParams($data);
             $order->fill($data);

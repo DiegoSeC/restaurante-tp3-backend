@@ -112,6 +112,11 @@ class QuotationRequestService extends AbstractService
 
             DB::beginTransaction();
 
+            $quotationRequest = $this->quotationRequestModel->where('uuid', '=', $uuid)->first();
+            if(is_null($quotationRequest)) {
+                throw new NotFoundException();
+            }
+
             if (isset($data['order']) && !empty($data['order'])) {
                 $order = $this->orderModel->where('uuid', $data['order'])->first();
                 if(!is_null($order)) {
@@ -119,11 +124,6 @@ class QuotationRequestService extends AbstractService
                 } else {
                     throw new NotFoundException();
                 }
-            }
-
-            $quotationRequest = $this->quotationRequestModel->where('uuid', '=', $uuid)->first();
-            if(is_null($quotationRequest)) {
-                throw new NotFoundException();
             }
 
             $data = $this->clearNullParams($data);

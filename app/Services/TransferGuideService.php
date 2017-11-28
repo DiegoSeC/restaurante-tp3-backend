@@ -131,12 +131,26 @@ class TransferGuideService extends AbstractService
 
             DB::beginTransaction();
 
+            $transferGuide = $this->transferGuideModel->where('uuid', '=', $uuid)->first();
+            if(is_null($transferGuide)) {
+                throw new NotFoundException();
+            }
+
             if (isset($data['order']) && !empty($data['order'])) {
                 $order = $this->orderModel->where('uuid', $data['order'])->first();
                 if(!is_null($order)) {
                     $data['order_id'] = $order->id;
                 } else {
                     throw new NotFoundException();
+                }
+
+                $orderInDB = Order::find($transferGuide->order_id);
+                if($orderInDB->id != $order->id) {
+                    $orderInDB->status = Order::ORDER_STATUS_PENDING;
+                    $orderInDB->save();
+
+                    $order->status = Order::ORDER_STATUS_COMPLETED;
+                    $order->save();
                 }
             }
 
@@ -158,10 +172,6 @@ class TransferGuideService extends AbstractService
                 }
             }
 
-            $transferGuide = $this->transferGuideModel->where('uuid', '=', $uuid)->first();
-            if(is_null($transferGuide)) {
-                throw new NotFoundException();
-            }
 
             $data = $this->clearNullParams($data);
             $transferGuide->fill($data);

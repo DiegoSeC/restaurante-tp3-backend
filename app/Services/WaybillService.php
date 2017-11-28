@@ -151,6 +151,11 @@ class WaybillService extends AbstractService implements CrudServiceInterface
 
             DB::beginTransaction();
 
+            $waybill = $this->waybillModel->where('uuid', '=', $uuid)->first();
+            if (is_null($waybill)) {
+                throw new NotFoundException();
+            }
+
             if (isset($data['order']) && !empty($data['order'])) {
                 $order = $this->orderModel->where('uuid', $data['order'])->first();
                 if (!is_null($order)) {
@@ -194,11 +199,6 @@ class WaybillService extends AbstractService implements CrudServiceInterface
                 } else {
                     throw new NotFoundException();
                 }
-            }
-
-            $waybill = $this->waybillModel->where('uuid', '=', $uuid)->first();
-            if (is_null($waybill)) {
-                throw new NotFoundException();
             }
 
             $data = $this->clearNullParams($data);
