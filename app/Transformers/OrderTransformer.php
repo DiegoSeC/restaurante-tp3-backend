@@ -23,7 +23,12 @@ class OrderTransformer extends TransformerAbstract
                 'uuid' => $warehouse->uuid,
                 'code' => $warehouse->code,
                 'name' => $warehouse->name,
-                'address' => $warehouse->address
+                'contact' => $warehouse->contact_name,
+                'email' => $warehouse->contact_email,
+                'address' => $warehouse->address,
+                'phone_number' => $warehouse->contact_phone_number,
+                'longitude' => $warehouse->longitude,
+                'latitude' => $warehouse->latitude
             ],
             'status' => $order->status,
             'date' => $order->created_at->toDateString()
