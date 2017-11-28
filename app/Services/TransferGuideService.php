@@ -114,7 +114,7 @@ class TransferGuideService extends AbstractService
             throw $exception;
         } catch (\Exception $exception) {
             DB::rollBack();
-            Log::error($exception->getMessage());
+            Log::error(json_encode($exception));
             throw new NotCreatedException(null);
         }
     }
@@ -130,9 +130,6 @@ class TransferGuideService extends AbstractService
         try {
 
             DB::beginTransaction();
-
-            $products = $data['products'];
-            unset($data['products']);
 
             if (isset($data['order']) && !empty($data['order'])) {
                 $order = $this->orderModel->where('uuid', $data['order'])->first();
@@ -170,7 +167,9 @@ class TransferGuideService extends AbstractService
             $transferGuide->fill($data);
             $transferGuide->save();
 
-            if(isset($products) && !empty($products)) {
+            if(isset($data['products']) && !empty($data['products'])) {
+                $products = $data['products'];
+                unset($data['products']);
                 $transferGuide->products()->detach();
                 foreach ($products as $product) {
                     $productDB = $this->productModel->where('uuid', $product['uuid'])->first();
@@ -191,7 +190,7 @@ class TransferGuideService extends AbstractService
             throw $exception;
         } catch (\Exception $exception) {
             DB::rollBack();
-            Log::error($exception->getMessage());
+            Log::error(json_encode($exception));
             throw new NotUpdatedException(null);
         }
     }

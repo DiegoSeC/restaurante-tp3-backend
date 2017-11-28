@@ -101,7 +101,7 @@ class OrderService extends AbstractService implements CrudServiceInterface
             throw $exception;
         } catch (\Exception $exception) {
             DB::rollBack();
-            Log::error($exception->getMessage());
+            Log::error(json_encode($exception));
             throw new NotCreatedException(null);
         }
     }
@@ -117,9 +117,6 @@ class OrderService extends AbstractService implements CrudServiceInterface
         try {
 
             DB::beginTransaction();
-
-            $products = $data['products'];
-            unset($data['products']);
 
             if(isset($data['warehouse']) && !empty($data['warehouse'])) {
                 $warehouse = $this->warehouseModel->where('uuid', $data['warehouse'])->first();
@@ -139,7 +136,9 @@ class OrderService extends AbstractService implements CrudServiceInterface
             $order->fill($data);
             $order->save();
 
-            if(isset($products) && !empty($products)) {
+            if(isset($data['products']) && !empty($data['products'])) {
+                $products = $data['products'];
+                unset($data['products']);
                 $order->products()->detach();
                 foreach ($products as $product) {
                     $productDB = $this->productModel->where('uuid', $product['uuid'])->first();
@@ -160,7 +159,7 @@ class OrderService extends AbstractService implements CrudServiceInterface
             throw $exception;
         } catch (\Exception $exception) {
             DB::rollBack();
-            Log::error($exception->getMessage());
+            Log::error(json_encode($exception));
             throw new NotUpdatedException(null);
         }
     }

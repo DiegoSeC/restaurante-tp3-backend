@@ -133,7 +133,7 @@ class WaybillService extends AbstractService implements CrudServiceInterface
             throw $exception;
         } catch (\Exception $exception) {
             DB::rollBack();
-            Log::error($exception->getMessage());
+            Log::error(json_encode($exception));
             throw new NotCreatedException(null);
         }
     }
@@ -150,9 +150,6 @@ class WaybillService extends AbstractService implements CrudServiceInterface
         try {
 
             DB::beginTransaction();
-
-            $products = $data['products'];
-            unset($data['products']);
 
             if (isset($data['order']) && !empty($data['order'])) {
                 $order = $this->orderModel->where('uuid', $data['order'])->first();
@@ -208,7 +205,9 @@ class WaybillService extends AbstractService implements CrudServiceInterface
             $waybill->fill($data);
             $waybill->save();
 
-            if (isset($products) && !empty($products)) {
+            if(isset($data['products']) && !empty($data['products'])) {
+                $products = $data['products'];
+                unset($data['products']);
                 $waybill->products()->detach();
                 foreach ($products as $product) {
                     $productDB = $this->productModel->where('uuid', $product['uuid'])->first();
@@ -230,7 +229,7 @@ class WaybillService extends AbstractService implements CrudServiceInterface
             throw $exception;
         } catch (\Exception $exception) {
             DB::rollBack();
-            Log::error($exception->getMessage());
+            Log::error(json_encode($exception));
             throw new NotUpdatedException(null);
         }
     }
