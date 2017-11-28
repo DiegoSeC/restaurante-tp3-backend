@@ -35,7 +35,7 @@ class QuotationRequestService extends AbstractService
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public function getAll() {
-        return $this->quotationRequestModel->quotationRequestBy('created_at', 'desc')->get();
+        return $this->quotationRequestModel->orderBy('created_at', 'desc')->get();
     }
 
     /**
