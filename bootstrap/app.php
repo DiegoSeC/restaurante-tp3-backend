@@ -36,6 +36,7 @@ $app->withEloquent();
 
 $app->configure('exception');
 $app->configure('mail');
+$app->configure('sentry');
 
 /*
 |--------------------------------------------------------------------------
@@ -91,6 +92,10 @@ $app->middleware([
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
+
+if (class_exists(Sentry\SentryLaravel\SentryLumenServiceProvider::class)) {
+    $app->register(Sentry\SentryLaravel\SentryLumenServiceProvider::class);
+}
 
 if (class_exists(Spatie\Fractal\FractalServiceProvider::class)) {
     $app->register(Spatie\Fractal\FractalServiceProvider::class);
