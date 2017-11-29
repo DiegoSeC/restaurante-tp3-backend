@@ -48,4 +48,9 @@ class Warehouse extends Model
     public function orders() {
         return $this->hasMany('App\Models\Order');
     }
+
+    public function employees() {
+        return $this->hasMany('App\Models\Employee');
+    }
+
 }

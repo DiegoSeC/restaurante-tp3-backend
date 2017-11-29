@@ -28,4 +28,9 @@ class Employee extends Model
     public function role() {
         return $this->belongsTo('App\Models\Role');
     }
+
+    public function warehouse() {
+        return $this->belongsTo('App\Models\Warehouse');
+    }
+
 }
