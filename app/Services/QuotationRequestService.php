@@ -98,6 +98,9 @@ class QuotationRequestService extends AbstractService
                 }
             }
 
+            $order->status = Order::ORDER_STATUS_COMPLETED;
+            $order->save();
+
             DB::commit();
 
             foreach ($mailableData as $mailableElement) {
@@ -143,6 +146,15 @@ class QuotationRequestService extends AbstractService
                     $data['order_id'] = $order->id;
                 } else {
                     throw new NotFoundException();
+                }
+
+                $orderInDB = Order::find($quotationRequest->order_id);
+                if($orderInDB->id != $order->id) {
+                    $orderInDB->status = Order::ORDER_STATUS_PENDING;
+                    $orderInDB->save();
+
+                    $order->status = Order::ORDER_STATUS_COMPLETED;
+                    $order->save();
                 }
             }
 
