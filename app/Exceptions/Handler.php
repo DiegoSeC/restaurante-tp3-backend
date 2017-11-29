@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use App\Exceptions\Classes\AbstractException;
+use App\Exceptions\Classes\BadRequestException;
+use App\Exceptions\Classes\NotFoundException;
 use Exception;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -22,6 +24,8 @@ class Handler extends ExceptionHandler
         HttpException::class,
         ModelNotFoundException::class,
         ValidationException::class,
+        BadRequestException::class,
+        NotFoundException::class
     ];
 
     /**
