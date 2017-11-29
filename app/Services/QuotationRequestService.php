@@ -118,7 +118,7 @@ class QuotationRequestService extends AbstractService
             throw $exception;
         } catch (\Exception $exception) {
             DB::rollBack();
-            Log::error(json_encode($exception));
+            Log::error($exception->getTraceAsString());
             throw new NotCreatedException(null);
         }
     }
@@ -185,7 +185,7 @@ class QuotationRequestService extends AbstractService
             throw $exception;
         } catch (\Exception $exception) {
             DB::rollBack();
-            Log::error(json_encode($exception));
+            Log::error($exception->getTraceAsString());
             throw new NotUpdatedException(null);
         }
     }

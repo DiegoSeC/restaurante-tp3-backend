@@ -70,4 +70,11 @@ $app->group(['prefix' => 'api'], function () use($app) {
 
     //test
     $app->get('test/email', 'TestController@email');
+
+    //employees
+    $app->get('employees/{uuid}', 'EmployeeController@get');
+
+    //users
+    $app->get('users/{uuid}/employee', 'EmployeeController@getByUserUuid');
+
 });

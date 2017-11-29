@@ -101,7 +101,7 @@ class OrderService extends AbstractService implements CrudServiceInterface
             throw $exception;
         } catch (\Exception $exception) {
             DB::rollBack();
-            Log::error(json_encode($exception));
+            Log::error($exception->getTraceAsString());
             throw new NotCreatedException(null);
         }
     }
@@ -160,7 +160,7 @@ class OrderService extends AbstractService implements CrudServiceInterface
             throw $exception;
         } catch (\Exception $exception) {
             DB::rollBack();
-            Log::error(json_encode($exception));
+            Log::error($exception->getTraceAsString());
             throw new NotUpdatedException(null);
         }
     }
