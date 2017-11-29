@@ -12,6 +12,7 @@ class EmployeeTransformer extends TransformerAbstract
     {
 
         $warehouse = $employee->warehouse;
+        $role = $employee->role;
 
         $response = [
             'uuid' => $employee->uuid,
@@ -33,6 +34,10 @@ class EmployeeTransformer extends TransformerAbstract
                 'longitude' => $warehouse->longitude,
                 'latitude' => $warehouse->latitude
             ],
+            'role' => [
+                'uuid' => $role->uuid,
+                'name' => $role->name
+            ]
         ];
 
         return $response;
