@@ -42,6 +42,10 @@ class OrderService extends AbstractService implements CrudServiceInterface
             $query = $query->where('status', '=', $filters['status']);
         }
 
+        if(isset($filters['q']) && !empty($filters['q'])) {
+            $query = $query->where('document_number', 'like', '%'. $filters['q'] . '%');
+        }
+
         return $query->orderBy('created_at', 'desc')->get();
     }
 

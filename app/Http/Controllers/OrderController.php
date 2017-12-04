@@ -38,7 +38,7 @@ class OrderController extends Controller
     public function index(Request $request) {
 
         $this->validateParams($request, FilterOrderValidationRules::rules());
-        $filters = $request->only(['status']);
+        $filters = $request->only(['status', 'q']);
 
         $data = $this->orderService->getAll($filters);
 
