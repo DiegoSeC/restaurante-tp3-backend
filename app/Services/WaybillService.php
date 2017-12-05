@@ -222,11 +222,10 @@ class WaybillService extends AbstractService implements CrudServiceInterface
                 }
             }
 
-            return $waybill;
-
             DB::commit();
 
-            return $transferGuide;
+            return $waybill;
+
         } catch (NotFoundException $exception){
             DB::rollBack();
             throw $exception;
