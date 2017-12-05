@@ -30,8 +30,8 @@ class TransferGuide extends Model
         return $this->belongsToMany('App\Models\Product', 'transfer_guide_has_products')->withPivot('quantity')->withTimestamps();
     }
 
-    public function order() {
-        return $this->belongsTo('App\Models\Order');
+    public function waybill() {
+        return $this->belongsTo('App\Models\Waybill');
     }
 
     public function warehouse_from() {

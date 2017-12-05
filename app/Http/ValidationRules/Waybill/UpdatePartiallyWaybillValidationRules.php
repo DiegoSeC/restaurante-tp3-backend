@@ -12,7 +12,7 @@ class UpdatePartiallyWaybillValidationRules
             'status' => 'string|in:active,canceled',
             'warehouse_from' => 'string|exists:warehouses,uuid',
             'warehouse_to' => 'string|exists:warehouses,uuid|different:warehouse_from',
-            'order' => 'exists:orders,uuid',
+            'transfer_guide' => 'exists:transfer_guides,uuid',
             'products' => 'array',
             'products.*.uuid' => 'required|string|exists:products,uuid',
             'products.*.quantity' => 'required|integer|min:1',

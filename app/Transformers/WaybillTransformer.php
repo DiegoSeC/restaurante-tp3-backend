@@ -22,7 +22,16 @@ class WaybillTransformer extends TransformerAbstract
         $truck = $waybill->truck;
         $warehouseFrom = $waybill->warehouse_from;
         $warehouseTo = $waybill->warehouse_to;
-        $order = $waybill->order;
+        $transferGuide = $waybill->transfer_guide;
+
+        if(isset($transferGuide) && !empty($transferGuide)) {
+            $transferGuideArray = [
+                'uuid' => $transferGuide->uuid,
+                'document_number' => $transferGuide->document_number
+            ];
+        } else {
+            $transferGuideArray = null;
+        }
 
         $response = [
             'uuid' => $waybill->uuid,
@@ -60,10 +69,7 @@ class WaybillTransformer extends TransformerAbstract
                 'longitude' => $warehouseTo->longitude,
                 'latitude' => $warehouseTo->latitude
             ],
-            'order' => [
-                'uuid' => $order->uuid,
-                'document_number' => $order->document_number,
-            ],
+            'transfer_guide' => $transferGuideArray,
             'comment' => $waybill->comment,
             'delivery_status' => (string) $waybill->delivery_status,
             'status' => (string) $waybill->status,

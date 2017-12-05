@@ -8,6 +8,7 @@ use App\Exceptions\Classes\NotUpdatedException;
 use App\Models\Carrier;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\TransferGuide;
 use App\Models\Truck;
 use App\Models\Warehouse;
 use App\Models\Waybill;
@@ -26,6 +27,7 @@ class WaybillService extends AbstractService implements CrudServiceInterface
     private $productModel = null;
     private $carrierModel = null;
     private $truckModel = null;
+    private $transferGuideModel = null;
 
     /**
      * WaybillService constructor.
@@ -38,6 +40,7 @@ class WaybillService extends AbstractService implements CrudServiceInterface
         $this->productModel = new Product();
         $this->carrierModel = new Carrier();
         $this->truckModel = new Truck();
+        $this->transferGuideModel = new TransferGuide();
     }
 
     /**
@@ -73,9 +76,9 @@ class WaybillService extends AbstractService implements CrudServiceInterface
             $data['status'] = Waybill::WAYBILL_STATUS_ACTIVE;
             $data['delivery_status'] = Waybill::WAYBILL_DELIVERY_STATUS_PENDING;
 
-            $order = $this->orderModel->where('uuid', $data['order'])->first();
-            if(!is_null($order)) {
-                $data['order_id'] = $order->id;
+            $transferGuide = $this->transferGuideModel->where('uuid', $data['transfer_guide'])->first();
+            if(!is_null($transferGuide)) {
+                $data['transfer_guide_id'] = $transferGuide->id;
             } else {
                 throw new NotFoundException();
             }
@@ -156,10 +159,10 @@ class WaybillService extends AbstractService implements CrudServiceInterface
                 throw new NotFoundException();
             }
 
-            if (isset($data['order']) && !empty($data['order'])) {
-                $order = $this->orderModel->where('uuid', $data['order'])->first();
-                if (!is_null($order)) {
-                    $data['order_id'] = $order->id;
+            if (isset($data['transfer_guide']) && !empty($data['transfer_guide'])) {
+                $transferGuide = $this->transferGuideModel->where('uuid', $data['transfer_guide'])->first();
+                if (!is_null($transferGuide)) {
+                    $data['transfer_guide_id'] = $transferGuide->id;
                 } else {
                     throw new NotFoundException();
                 }
