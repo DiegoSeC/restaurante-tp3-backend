@@ -14,7 +14,7 @@ class AlterTableWaybills20171204 extends Migration
     public function up()
     {
         Schema::table('waybills', function (Blueprint $table) {
-            $table->dropForeign(['order_id']);
+            //$table->dropForeign(['order_id']);
             $table->dropColumn('order_id');
         });
 
