@@ -190,8 +190,8 @@ $factory->define(App\Models\Waybill::class, function (Faker\Generator $faker) {
         'warehouse_to_id' => function($waybill) {
             return App\Models\Warehouse::inRandomOrder()->first()->id ?: factory(App\Models\Warehouse::class)->create()->id;
         },
-        'order_id' => function($waybill) {
-            return App\Models\Order::inRandomOrder()->first()->id ?: factory(App\Models\Order::class)->create()->id;
+        'transfer_guide_id' => function($waybill) {
+            return App\Models\TransferGuide::inRandomOrder()->first()->id ?: factory(App\Models\TransferGuide::class)->create()->id;
         },
         'date_time' => $faker->dateTime,
         'comment' => null,
