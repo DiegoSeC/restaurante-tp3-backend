@@ -31,7 +31,11 @@ class TransferGuide extends Model
     }
 
     public function waybill() {
-        return $this->belongsTo('App\Models\Waybill');
+        return $this->hasOne('App\Models\Waybill');
+    }
+
+    public function order() {
+        return $this->belongsTo('App\Models\Order');
     }
 
     public function warehouse_from() {
