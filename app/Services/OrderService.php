@@ -20,6 +20,7 @@ class OrderService extends AbstractService implements CrudServiceInterface
     private $orderModel = null;
     private $productModel = null;
     private $warehouseModel = null;
+    protected $prefixDocumentNumber = Order::DOCUMENT_NUMBER_PREFIX;
 
     /**
      * OrderService constructor.
@@ -84,7 +85,7 @@ class OrderService extends AbstractService implements CrudServiceInterface
 
             $this->orderModel->update([
                 'uuid' => $this->orderModel->generateUuid(),
-                'document_number' => $this->documentNumberGenerator(Order::DOCUMENT_NUMBER_PREFIX, 6, $this->orderModel->id)
+                'document_number' => $this->documentNumberGenerator($this->orderModel->id)
             ]);
 
             foreach ($products as $product) {

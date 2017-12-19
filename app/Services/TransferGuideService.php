@@ -22,6 +22,7 @@ class TransferGuideService extends AbstractService
     private $productModel = null;
     private $warehouseModel = null;
     private $orderModel = null;
+    protected $prefixDocumentNumber = TransferGuide::DOCUMENT_NUMBER_PREFIX;
 
     /**
      * TransferGuideService constructor.
@@ -91,7 +92,7 @@ class TransferGuideService extends AbstractService
 
             $this->transferGuideModel->update([
                 'uuid' => $this->transferGuideModel->generateUuid(),
-                'document_number' => $this->documentNumberGenerator(TransferGuide::DOCUMENT_NUMBER_PREFIX, 6, $this->transferGuideModel->id)
+                'document_number' => $this->documentNumberGenerator($this->transferGuideModel->id)
             ]);
 
             foreach ($products as $product) {

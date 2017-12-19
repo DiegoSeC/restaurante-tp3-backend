@@ -8,10 +8,21 @@ class OrderTest extends TestCase
     /**
      * Testing correlative number generation
      */
-    public function testGenerateNumber() {
+    public function testGenerateDocumentNumber() {
+        $instance = new \App\Services\OrderService();
 
-        //https://jtreminio.com/2013/03/unit-testing-tutorial-part-3-testing-protected-private-methods-coverage-reports-and-crap/
+        $number1 = $this->invokeMethod($instance, 'documentNumberGenerator', [31]);
+        $number2 = $this->invokeMethod($instance, 'documentNumberGenerator', [32]);
+        $number3 = $this->invokeMethod($instance, 'documentNumberGenerator', [33]);
+        $number4 = $this->invokeMethod($instance, 'documentNumberGenerator', [1000]);
+        $number5 = $this->invokeMethod($instance, 'documentNumberGenerator', [999999]);
 
+
+        $this->assertEquals('NP17000031', $number1);
+        $this->assertEquals('NP17000032', $number2);
+        $this->assertEquals('NP17000033', $number3);
+        $this->assertEquals('NP17001000', $number4);
+        $this->assertEquals('NP17999999', $number5);
     }
 
 }

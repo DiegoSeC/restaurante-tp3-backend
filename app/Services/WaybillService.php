@@ -28,6 +28,7 @@ class WaybillService extends AbstractService implements CrudServiceInterface
     private $carrierModel = null;
     private $truckModel = null;
     private $transferGuideModel = null;
+    protected $prefixDocumentNumber = Waybill::DOCUMENT_NUMBER_PREFIX;
 
     /**
      * WaybillService constructor.
@@ -116,7 +117,7 @@ class WaybillService extends AbstractService implements CrudServiceInterface
 
             $this->waybillModel->update([
                 'uuid' => $this->waybillModel->generateUuid(),
-                'document_number' => $this->documentNumberGenerator(Waybill::DOCUMENT_NUMBER_PREFIX, 6, $this->waybillModel->id)
+                'document_number' => $this->documentNumberGenerator($this->waybillModel->id)
             ]);
 
             foreach ($products as $product) {

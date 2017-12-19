@@ -22,6 +22,7 @@ class QuotationRequestService extends AbstractService
     private $quotationRequestModel = null;
     private $productModel = null;
     private $orderModel = null;
+    protected $prefixDocumentNumber = QuotationRequest::DOCUMENT_NUMBER_PREFIX;
 
     /**
      * QuotationRequestService constructor.
@@ -76,7 +77,7 @@ class QuotationRequestService extends AbstractService
 
             $this->quotationRequestModel->update([
                 'uuid' => $this->quotationRequestModel->generateUuid(),
-                'document_number' => $this->documentNumberGenerator(QuotationRequest::DOCUMENT_NUMBER_PREFIX, 6, $this->quotationRequestModel->id)
+                'document_number' => $this->documentNumberGenerator($this->quotationRequestModel->id)
             ]);
 
             $mailableData = [];
