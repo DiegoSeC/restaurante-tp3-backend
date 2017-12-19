@@ -116,7 +116,7 @@ class WaybillService extends AbstractService implements CrudServiceInterface
 
             $this->waybillModel->update([
                 'uuid' => $this->waybillModel->generateUuid(),
-                'document_number' => $this->documentNumberGenerator(Waybill::DOCUMENT_NUMBER_PREFIX, 10, $this->waybillModel->id)
+                'document_number' => $this->documentNumberGenerator(Waybill::DOCUMENT_NUMBER_PREFIX, 6, $this->waybillModel->id)
             ]);
 
             foreach ($products as $product) {

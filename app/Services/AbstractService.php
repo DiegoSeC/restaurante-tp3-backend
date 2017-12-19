@@ -13,7 +13,7 @@ abstract class AbstractService
      * @return string
      */
     protected function documentNumberGenerator($prefix, $length, $number) {
-        return $prefix . str_pad($number,$length,'0', STR_PAD_LEFT);
+        return $prefix . date('y') . str_pad($number,$length,'0', STR_PAD_LEFT);
     }
 
 

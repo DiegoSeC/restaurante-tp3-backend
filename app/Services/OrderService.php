@@ -84,7 +84,7 @@ class OrderService extends AbstractService implements CrudServiceInterface
 
             $this->orderModel->update([
                 'uuid' => $this->orderModel->generateUuid(),
-                'document_number' => $this->documentNumberGenerator(Order::DOCUMENT_NUMBER_PREFIX, 10, $this->orderModel->id)
+                'document_number' => $this->documentNumberGenerator(Order::DOCUMENT_NUMBER_PREFIX, 6, $this->orderModel->id)
             ]);
 
             foreach ($products as $product) {

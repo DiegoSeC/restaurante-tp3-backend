@@ -76,7 +76,7 @@ class QuotationRequestService extends AbstractService
 
             $this->quotationRequestModel->update([
                 'uuid' => $this->quotationRequestModel->generateUuid(),
-                'document_number' => $this->documentNumberGenerator(QuotationRequest::DOCUMENT_NUMBER_PREFIX, 10, $this->quotationRequestModel->id)
+                'document_number' => $this->documentNumberGenerator(QuotationRequest::DOCUMENT_NUMBER_PREFIX, 6, $this->quotationRequestModel->id)
             ]);
 
             $mailableData = [];

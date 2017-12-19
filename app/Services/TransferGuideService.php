@@ -91,7 +91,7 @@ class TransferGuideService extends AbstractService
 
             $this->transferGuideModel->update([
                 'uuid' => $this->transferGuideModel->generateUuid(),
-                'document_number' => $this->documentNumberGenerator(TransferGuide::DOCUMENT_NUMBER_PREFIX, 10, $this->transferGuideModel->id)
+                'document_number' => $this->documentNumberGenerator(TransferGuide::DOCUMENT_NUMBER_PREFIX, 6, $this->transferGuideModel->id)
             ]);
 
             foreach ($products as $product) {
