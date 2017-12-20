@@ -24,7 +24,7 @@ class OrderTest extends TestCase
         $this->assertEquals('NP17000033', $number3);
         $this->assertEquals('NP17001000', $number4);
         $this->assertEquals('NP17999999', $number5);
-        !$this->assertEquals('NP17000009', $number6);
+        #$this->assertEquals('NP17000009', $number6);
     }
 
 }
